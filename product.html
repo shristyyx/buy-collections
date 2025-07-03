@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Product Detail</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+  <style>
+    .thumb-selected { border: 2px solid black; }
+    .zoom-image:hover { transform: scale(1.05); transition: transform 0.3s ease; }
+    .size-btn.selected { background-color: #f87171; color: white; border-color: #f87171; }
+    .bounce {
+      animation: bounce 0.5s ease;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+  @media (max-width: 640px) {
+    /* Product Detail Section Tweaks */
+    #product-detail .flex.md\\:flex-row {
+      flex-direction: column;
+    }
+
+    #product-detail .flex.md\\:flex-row > .flex {
+      flex-direction: column-reverse;
+    }
+
+    #product-detail .flex.md\\:flex-row > .flex > div:first-child {
+      flex-direction: row;
+      overflow-x: auto;
+    }
+
+    #product-detail .flex.md\\:flex-row > .flex > div:first-child > div {
+      flex-shrink: 0;
+    }
+
+    #product-detail h2,
+    #product-detail p,
+    #product-detail button,
+    #reviews-section h2,
+    #reviews-section h3 {
+      font-size: 90% !important;
+    }
+
+    #product-detail .w-\\[500px\\],
+    #product-detail .h-\\[500px\\] {
+      width: 100% !important;
+      height: auto !important;
+    }
+
+    /* Related Products: 2 per row on small screens */
+    #related-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    #related-list > div {
+      width: auto !important;
+    }
+
+    #related-list img {
+      height: 150px !important;
+    }
+
+    #related-list p {
+      font-size: 90%;
+    }
+
+    #related-list button {
+      font-size: 10px;
+    }
+
+    /* Smaller review box text */
+    #review-list p,
+    #review-list span,
+    #review-list .text-sm {
+      font-size: 90% !important;
+    }
+  }
+</style>
+
+</head>
+<body class="bg-white text-gray-800 font-sans">
+
+<header class="flex flex-col sm:flex-row items-center justify-between px-4 sm:px-6 py-3 border-b gap-2">
+  <a href="index.html" class="text-xl sm:text-2xl font-bold">COLLECTIONS</a>
+  <nav class="flex gap-4 text-sm sm:text-base">
+    <a href="index.html" class="hover:underline">Home</a>
+    <a href="outfit-ideas.html" class="hover:underline">Outfit Ideas</a>
+    <a href="cart.html" class="hover:underline">Cart</a>
+  </nav>
+</header>
+
+<main class="p-4 max-w-5xl mx-auto">
+  <div id="product-detail" class="bg-white rounded-lg mb-10"></div>
+
+  <!-- Related Products -->
+  <div id="related-products" class="mt-20 bg-gradient-to-b from-pink-50 via-white to-white py-12 px-4 sm:px-6 hidden rounded-xl shadow-inner">
+    <h3 class="text-lg sm:text-xl font-medium text-gray-700 mb-3 text-center">Related Products</h3>
+    <div id="related-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 max-w-6xl mx-auto"></div>
+  </div>
+</main>
+
+<!-- Customer Reviews Section -->
+<section class="mt-20 bg-pink-50 py-12 rounded-xl shadow-inner px-4 sm:px-6" id="reviews-section">
+  <div class="max-w-5xl mx-auto">
+    <h2 class="text-xl sm:text-3xl font-extrabold text-center text-gray-800 mb-6 sm:mb-8">Customer Reviews</h2>
+
+    <!-- Rating Summary -->
+    <div class="flex flex-col items-center mb-8 sm:mb-10">
+      <div class="flex items-center space-x-2">
+        <span class="text-3xl sm:text-4xl font-bold text-yellow-500" id="avg-rating">0.0</span>
+        <span class="text-sm text-gray-600">/ 5</span>
+      </div>
+      <div class="text-sm text-gray-500">based on <span id="total-reviews">0</span> reviews</div>
+    </div>
+
+    <!-- Reviews Grid -->
+    <div id="review-list" class="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3"></div>
+
+    <!-- Write Review Box -->
+    <div class="mt-10 sm:mt-12 bg-white shadow-lg rounded-xl p-4 sm:p-6 max-w-xl mx-auto">
+      <h3 class="text-lg sm:text-xl font-semibold mb-4 text-gray-800">Write a Review</h3>
+      <div class="flex gap-1 mb-3" id="star-input"></div>
+      <textarea id="review-text" rows="3" class="w-full border border-gray-300 rounded-lg p-2 text-sm mb-3 focus:outline-none focus:ring-2 focus:ring-pink-300" placeholder="Write your review..."></textarea>
+      <input id="review-name" type="text" placeholder="Your Name (optional)" class="w-full border border-gray-300 rounded-lg p-2 text-sm mb-4 focus:outline-none focus:ring-2 focus:ring-pink-300" />
+      <button onclick="submitReview()" class="bg-pink-500 hover:bg-pink-600 text-white px-6 py-2 rounded-lg shadow font-semibold">Submit Review</button>
+    </div>
+  </div>
+</section>
+
+<script>
+  const data = JSON.parse(localStorage.getItem('selectedCollection')) || {};
+  const allImages = [data.model_image, ...(data.products || [])];
+  let selectedClothingSize = "M";
+  let selectedShoeSize = "UK 7";
+  let removedIndexes = new Set();
+
+  const container = document.getElementById("product-detail");
+  container.innerHTML = `
+      <div class="flex flex-col md:flex-row gap-6 items-start">
+            <div class="hidden sm:flex gap-4 w-full md:w-7/12">
+          <div class="flex flex-col gap-2">
+            ${allImages.map((img, index) => `
+              <div class="w-24 h-24 overflow-hidden border rounded">
+                <img src="${img}" onclick="setActiveImage('${img}', this)"
+                    class="w-[60px] h-[60px] object-cover cursor-pointer rounded border ${index === 0 ? 'thumb-selected' : ''}" />
+              </div>
+            `).join('')}
+          </div>
+          <div class="w-[500px] h-[500px] border rounded overflow-hidden flex items-center justify-center">
+            <img id="mainImage" src="${data.model_image}" style="width:500px; height:500px;" class="object-cover zoom-image" />
+          </div>
+
+        </div>
+        <!-- ✅ Mobile Version (separate layout) -->
+        <!-- ✅ Mobile Version (desktop-style fixed preview size) -->
+<div class="flex sm:hidden flex-col gap-2 w-full items-center">
+  <div class="w-[300px] h-[300px] border rounded overflow-hidden flex items-center justify-center">
+    <img id="mainImage" src="${data.model_image}" style="width:300px; height:300px;" class="object-cover zoom-image" />
+  </div>
+  
+  <div class="flex flex-row gap-2 overflow-x-auto mt-2 px-1 w-full justify-center">
+    ${allImages.map((img, index) => `
+      <div class="w-20 h-20 flex-shrink-0 border rounded overflow-hidden">
+        <img src="${img}" onclick="setActiveImage('${img}', this)"
+             class="w-full h-full object-cover cursor-pointer rounded border ${index === 0 ? 'thumb-selected' : ''}" />
+      </div>
+    `).join('')}
+  </div>
+</div>
+
+
+      <div class="w-full md:w-5/12">
+        <h2 class="text-xl font-semibold mb-2">${data.title}</h2>
+        <div class="mb-3">
+          <div id="clothingSizeOptions" class="flex gap-2 flex-wrap">
+            ${["XS", "S", "M", "L", "XL"].map(size => `
+              <button onclick="selectClothingSize('${size}', this)"
+                      class="size-btn px-3 py-1 border rounded text-sm">${size}</button>
+            `).join("")}
+          </div>
+        </div>
+        <div class="mb-3">
+          <div id="shoeSizeOptions" class="flex gap-2 flex-wrap">
+            ${["UK 5", "UK 6", "UK 7", "UK 8"].map(size => `
+              <button onclick="selectShoeSize('${size}', this)"
+                      class="size-btn px-3 py-1 border rounded text-sm">${size}</button>
+            `).join("")}
+          </div>
+        </div>
+        <div class="space-y-2 mb-6" id="productList">
+          ${data.products.map((img, i) => `
+            <div class="flex items-center gap-3 p-2 border rounded" id="product-${i}">
+              <img src="${img}" class="w-14 h-14 object-cover rounded" />
+              <div class="flex-1">
+                <p class="text-sm font-medium">Product ${i + 1}</p>
+                <p class="text-xs text-gray-600">Price: ₹999</p>
+              </div>
+              <button onclick="removeProduct(${i})" class="text-xs text-red-500 hover:underline">❌ Remove</button>
+            </div>
+          `).join("")}
+        </div>
+        <div class="flex items-center gap-3">
+          <button id="addToCartBtn" onclick="addToCart()" class="bg-red-600 hover:bg-red-700 text-white w-4/5 py-2 rounded transition-all duration-300">
+            Add to Cart
+          </button>
+          <button id="addToWishlistBtn" onclick="addToWishlist()" class="border border-pink-400 text-pink-600 hover:bg-pink-100 p-2 rounded-full text-xl">
+            ❤️
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
+
+  function setActiveImage(src, clickedThumb) {
+  // Update both mobile and desktop preview images
+  const mainImages = document.querySelectorAll("#mainImage");
+  mainImages.forEach(img => img.src = src);
+
+  // Remove selection highlight from all thumbnails
+  document.querySelectorAll(".thumb-selected").forEach(el => el.classList.remove("thumb-selected"));
+  
+  // Add selection highlight to the clicked thumbnail
+  clickedThumb.classList.add("thumb-selected");
+}
+
+
+
+  function selectClothingSize(size, btn) {
+    selectedClothingSize = size;
+    document.querySelectorAll('#clothingSizeOptions .size-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+  }
+
+  function selectShoeSize(size, btn) {
+    selectedShoeSize = size;
+    document.querySelectorAll('#shoeSizeOptions .size-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+  }
+
+  function removeProduct(index) {
+    removedIndexes.add(index);
+    const productDiv = document.getElementById(`product-${index}`);
+    if (productDiv) productDiv.remove();
+  }
+
+  function getActiveProducts() {
+    return data.products.filter((_, i) => !removedIndexes.has(i));
+  }
+
+  function addToCart() {
+    const cart = JSON.parse(localStorage.getItem("cartItems")) || [];
+    cart.push({
+      title: data.title,
+      image: data.model_image,
+      category: data.category,
+      price: data.products.length * 999 - 1000,
+      clothingSize: selectedClothingSize,
+      shoeSize: selectedShoeSize,
+      includedProducts: getActiveProducts()
+    });
+    localStorage.setItem("cartItems", JSON.stringify(cart));
+    const btn = document.getElementById("addToCartBtn");
+    btn.innerHTML = "🎉 Added to Cart!";
+    btn.classList.remove("bg-red-600", "hover:bg-red-700");
+    btn.classList.add("bg-green-600", "hover:bg-green-700", "bounce");
+    setTimeout(() => btn.classList.remove("bounce"), 600);
+  }
+
+  function addToWishlist() {
+    const wishlist = JSON.parse(localStorage.getItem("wishlistItems")) || [];
+    wishlist.push({
+      title: data.title,
+      image: data.model_image,
+      category: data.category,
+      price: data.products.length * 999 - 1000,
+      clothingSize: selectedClothingSize,
+      shoeSize: selectedShoeSize,
+      includedProducts: getActiveProducts()
+    });
+    localStorage.setItem("wishlistItems", JSON.stringify(wishlist));
+    const btn = document.getElementById("addToWishlistBtn");
+    btn.innerHTML = "💖";
+    btn.classList.add("bg-pink-500", "text-white", "bounce");
+    setTimeout(() => btn.classList.remove("bounce"), 600);
+  }
+
+  // Handle Related Products (only multiple of 3)
+  fetch("collections.json").then(res => res.json()).then(collections => {
+    const related = collections.filter(item => item.category === data.category && item.title !== data.title);
+    const trimmed = related.length >= 3 ? related.slice(0, 3) : [];
+    if (trimmed.length) {
+      document.getElementById("related-products").classList.remove("hidden");
+      document.getElementById("related-list").innerHTML = trimmed.map(item => `
+        <div class="break-inside-avoid bg-white rounded-xl shadow hover:shadow-md transition overflow-hidden w-[220px]">
+          <img src="${item.model_image}" class="w-full h-[200px] object-cover rounded-t-xl" />
+          <div class="p-3">
+            <p class="text-sm font-semibold text-gray-800 truncate">${item.title}</p>
+            <p class="text-xs text-gray-500">Category: ${item.category}</p>
+            <p class="text-xs text-pink-600">₹${item.products.length * 999 - 1000}</p>
+            <button onclick='selectRelated(${JSON.stringify(item)})'
+              class="mt-2 inline-block text-[11px] bg-pink-100 text-pink-600 px-2 py-1 rounded-full hover:bg-pink-200 transition">
+              View →
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+  });
+
+  function selectRelated(item) {
+    localStorage.setItem("selectedCollection", JSON.stringify(item));
+    window.location.href = "product.html";
+  }
+
+let selectedRating = 0;
+
+const starInput = document.getElementById("star-input");
+starInput.innerHTML = [...Array(5)].map((_, i) => `
+  <svg onclick="setRating(${i+1})" class="w-6 h-6 cursor-pointer text-gray-300 hover:text-yellow-400 transition"
+       fill="currentColor" viewBox="0 0 20 20">
+    <path d="M10 15l-5.878 3.09L5.82 11.545.94 7.41l6.09-.89L10 1.5l2.97 5.02 6.09.89-4.88 4.134 1.698 6.545z"/>
+  </svg>`).join('');
+
+function setRating(rating) {
+  selectedRating = rating;
+  const stars = document.querySelectorAll("#star-input svg");
+  stars.forEach((star, i) => {
+    star.classList.toggle("text-yellow-400", i < rating);
+    star.classList.toggle("text-gray-300", i >= rating);
+  });
+}
+
+function submitReview() {
+  const text = document.getElementById("review-text").value.trim();
+  const name = document.getElementById("review-name").value.trim() || "Anonymous";
+  if (selectedRating === 0 || text === "") {
+    alert("Please provide both rating and review.");
+    return;
+  }
+
+  const reviews = JSON.parse(localStorage.getItem("productReviews")) || {};
+  const currentTitle = data.title;
+  if (!reviews[currentTitle]) reviews[currentTitle] = [];
+  reviews[currentTitle].push({ name, rating: selectedRating, text });
+  localStorage.setItem("productReviews", JSON.stringify(reviews));
+
+  document.getElementById("review-text").value = "";
+  document.getElementById("review-name").value = "";
+  setRating(0);
+  renderReviews();
+}
+
+function renderReviews() {
+  const reviewList = document.getElementById("review-list");
+  const reviews = JSON.parse(localStorage.getItem("productReviews")) || {};
+  const productReviews = reviews[data.title] || [];
+
+  document.getElementById("total-reviews").textContent = productReviews.length;
+  if (productReviews.length === 0) {
+    document.getElementById("avg-rating").textContent = "0.0";
+    reviewList.innerHTML = `<p class="text-center text-gray-500 col-span-full">No reviews yet. Be the first to share your thoughts!</p>`;
+    return;
+  }
+
+  const avg = (productReviews.reduce((sum, r) => sum + r.rating, 0) / productReviews.length).toFixed(1);
+  document.getElementById("avg-rating").textContent = avg;
+
+  reviewList.innerHTML = productReviews.map(r => `
+    <div class="bg-white p-4 rounded-xl shadow hover:shadow-md transition">
+      <div class="flex items-center gap-2 mb-2">
+        ${[1, 2, 3, 4, 5].map(i => `
+          <svg class="w-4 h-4 ${i <= r.rating ? 'text-yellow-400' : 'text-gray-300'}"
+               fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 15l-5.878 3.09L5.82 11.545.94 7.41l6.09-.89L10 1.5l2.97 5.02 6.09.89-4.88 4.134 1.698 6.545z"/>
+          </svg>
+        `).join('')}
+        <span class="ml-auto text-xs text-gray-600 italic">${r.name}</span>
+      </div>
+      <p class="text-sm text-gray-700 leading-snug">${r.text}</p>
+    </div>
+  `).join('');
+}
+
+renderReviews();
+
+</script>
+
+</body>
+</html>
