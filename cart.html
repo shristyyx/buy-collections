@@ -4,75 +4,27 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Your Cart</title>
+  <!-- Tailwind CSS CDN -->
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
   <style>
+    /* Responsive styling for smaller devices */
     @media (max-width: 640px) {
-  h2 {
-    font-size: 1.25rem; /* text-xl */
-  }
+      h2 { font-size: 1.25rem; }
+      header a { font-size: 0.875rem; }
+      nav a { font-size: 0.75rem; }
+      .cart-wrapper { padding: 1rem !important; }
+      .cart-wrapper * { font-size: 0.75rem !important; }
+      .cart-wrapper img { width: 60px !important; height: 60px !important; }
+      .remove-btn, .restore-btn { font-size: 12px !important; padding: 1px 4px !important; }
+      .mt-10.p-4.flex.justify-between { flex-direction: column; gap: 1rem; align-items: flex-start; }
+      .space-x-4 { gap: 0.5rem; flex-wrap: wrap; }
+      .px-4.py-2 { padding: 0.5rem 0.75rem !important; font-size: 0.75rem !important; }
+      .text-lg { font-size: 1rem !important; }
+      .text-md, .text-sm, .text-xs { font-size: 0.65rem !important; }
+      .w-20.h-20 { width: 60px !important; height: 60px !important; }
+    }
 
-  header a {
-    font-size: 0.875rem; /* text-sm */
-  }
-
-  nav a {
-    font-size: 0.75rem; /* text-xs */
-  }
-
-  .cart-wrapper {
-    padding: 1rem !important;
-  }
-
-  .cart-wrapper h2,
-  .cart-wrapper p,
-  .cart-wrapper button,
-  .cart-wrapper a {
-    font-size: 0.75rem !important; /* Make all text small inside cart */
-  }
-
-  .cart-wrapper img {
-    width: 60px !important;
-    height: 60px !important;
-  }
-
-  .remove-btn,
-  .restore-btn {
-    font-size: 12px !important;
-    padding: 1px 4px !important;
-  }
-
-  .mt-10.p-4.flex.justify-between {
-    flex-direction: column;
-    gap: 1rem;
-    align-items: flex-start;
-  }
-
-  .space-x-4 {
-    gap: 0.5rem;
-    flex-wrap: wrap;
-  }
-
-  .px-4.py-2 {
-    padding: 0.5rem 0.75rem !important;
-    font-size: 0.75rem !important;
-  }
-
-  .text-lg {
-    font-size: 1rem !important;
-  }
-
-  .text-md,
-  .text-sm,
-  .text-xs {
-    font-size: 0.65rem !important;
-  }
-
-  .w-20.h-20 {
-    width: 60px !important;
-    height: 60px !important;
-  }
-}
-
+    /* Background and cart container styling */
     body {
       background-image: url("https://i.pinimg.com/736x/a2/b6/34/a2b6347ada1b8aa10b78706a78bf405d.jpg");
       background-size: cover;
@@ -81,9 +33,11 @@
     }
     .cart-wrapper {
       backdrop-filter: blur(10px);
-      background-color: rgba(255,255,255,0.92);
+      background-color: rgba(255, 255, 255, 0.92);
       border-radius: 12px;
     }
+
+    /* Styling for removed products */
     .removed {
       opacity: 0.4;
       position: relative;
@@ -100,46 +54,48 @@
     }
   </style>
 </head>
+
 <body class="text-gray-800 font-sans">
 
-<!-- Header -->
-<header class="flex flex-col sm:flex-row items-center justify-between px-4 sm:px-6 py-3 border-b gap-2 bg-white shadow-md">
-  <a href="index.html" class="text-xl sm:text-2xl font-bold">COLLECTIONS</a>
-  <nav class="flex gap-4 text-sm sm:text-base">
-    <a href="index.html" class="hover:underline">Home</a>
-    <a href="outfit-ideas.html" class="hover:underline">Outfit Ideas</a>
-    <a href="cart.html" class="hover:underline font-bold text-red-600">Cart</a>
-  </nav>
-</header>
+  <!-- Header -->
+  <header class="flex flex-col sm:flex-row items-center justify-between px-4 sm:px-6 py-3 border-b gap-2 bg-white shadow-md">
+    <a href="index.html" class="text-xl sm:text-2xl font-bold">COLLECTIONS</a>
+    <nav class="flex gap-4 text-sm sm:text-base">
+      <a href="index.html" class="hover:underline">Home</a>
+      <a href="outfit-ideas.html" class="hover:underline">Outfit Ideas</a>
+      <a href="cart.html" class="hover:underline font-bold text-red-600">Cart</a>
+    </nav>
+  </header>
 
+  <!-- Main Content -->
+  <main class="max-w-5xl mx-auto px-4 py-10 sm:px-2 sm:py-6">
+    <!-- Cart Section -->
+    <div class="cart-wrapper p-6 shadow-lg mb-8">
+      <h2 class="text-3xl font-bold mb-6">Your Cart</h2>
+      <div id="cart-container" class="space-y-8"></div>
 
-<main class="max-w-5xl mx-auto px-4 py-10 sm:px-2 sm:py-6">
-  <!-- Cart Section -->
-  <div class="cart-wrapper p-6 shadow-lg mb-8">
-    <h2 class="text-3xl font-bold mb-6">Your Cart</h2>
-    <div id="cart-container" class="space-y-8"></div>
-
-<div class="mt-10 p-4 border rounded shadow-sm flex sm:flex-col sm:items-start sm:gap-4 justify-between items-center bg-white">
-      <div>
-        <p class="text-lg font-semibold">Total: ₹<span id="cart-total">0</span></p>
-        <p class="text-sm text-gray-500">Including all taxes</p>
+      <!-- Total + Checkout -->
+      <div class="mt-10 p-4 border rounded shadow-sm flex sm:flex-col sm:items-start sm:gap-4 justify-between items-center bg-white">
+        <div>
+          <p class="text-lg font-semibold">Total: ₹<span id="cart-total">0</span></p>
+          <p class="text-sm text-gray-500">Including all taxes</p>
+        </div>
+        <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+          <a href="index.html" class="px-4 py-2 border rounded hover:bg-gray-100 transition text-center">Continue Shopping</a>
+          <button onclick="goToCheckout()" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 shadow transition text-center">Checkout</button>
+        </div>
       </div>
-      <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
-  <a href="index.html" class="px-4 py-2 border rounded hover:bg-gray-100 transition text-center">Continue Shopping</a>
-  <button onclick="goToCheckout()" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 shadow transition text-center">Checkout</button>
-</div>
-
     </div>
-  </div>
 
-  <!-- Wishlist Section -->
-  <div class="cart-wrapper p-6 shadow-lg">
-    <h2 class="text-2xl font-semibold mb-4">Wishlist</h2>
-    <div id="wishlist-container" class="space-y-6"></div>
-  </div>
-</main>
+    <!-- Wishlist Section -->
+    <div class="cart-wrapper p-6 shadow-lg">
+      <h2 class="text-2xl font-semibold mb-4">Wishlist</h2>
+      <div id="wishlist-container" class="space-y-6"></div>
+    </div>
+  </main>
 
-<script>
+  <!-- JavaScript: Handles rendering and cart actions -->
+  <script>
   const cartData = JSON.parse(localStorage.getItem("cartItems")) || [];
   const wishlistData = JSON.parse(localStorage.getItem("wishlistItems")) || [];
 
@@ -155,38 +111,38 @@
     }
 
     let total = 0;
-
     cartContainer.innerHTML = cartData.map((item, index) => {
       const included = item.includedProducts || [];
       const removed = item.removedProducts || [];
-      const price = included.length * 999;
-      total += price;
+
+      const itemTotal = included.reduce((sum, p) => sum + p.price, 0);
+      total += itemTotal;
 
       return `
         <div class="p-4 border rounded shadow-sm bg-white space-y-3">
           <div class="flex items-start justify-between">
             <a href="#" onclick="goToProductFromCart(${index})" class="text-lg font-semibold hover:underline">${item.title}</a>
-            <p class="text-red-600 font-semibold">₹${price}</p>
+            <p class="text-red-600 font-semibold">₹${itemTotal}</p>
           </div>
           <p class="text-sm text-gray-600">Clothing: ${item.clothingSize}, Shoe: ${item.shoeSize}</p>
           <div class="flex flex-wrap gap-4 mt-3 items-start">
             <div class="flex flex-col items-center">
-              <img src="${item.image}" class="w-20 h-20 object-cover border rounded" />
+              <img src="${item.model_image}" class="w-20 h-20 object-cover border rounded" />
               <p class="text-xs mt-1 text-center text-gray-600">Model</p>
             </div>
 
-            ${included.map((img, i) => `
+            ${included.map((prod, i) => `
               <div class="flex flex-col items-center relative">
-                <img src="${img}" class="w-20 h-20 object-cover border rounded" />
-                <p class="text-xs mt-1 text-center text-gray-600">Price: ₹999</p>
+                <img src="${prod.image}" class="w-20 h-20 object-cover border rounded" />
+                <p class="text-xs mt-1 text-center text-gray-600">Price: ₹${prod.price}</p>
                 <button onclick="removeProduct(${index}, ${i})" class="remove-btn">❌</button>
               </div>
             `).join('')}
 
-            ${removed.map((img, i) => `
+            ${removed.map((prod, i) => `
               <div class="flex flex-col items-center relative removed">
-                <img src="${img}" class="w-20 h-20 object-cover border rounded" />
-                <p class="text-xs mt-1 text-center text-gray-600 line-through">Price: ₹999</p>
+                <img src="${prod.image}" class="w-20 h-20 object-cover border rounded" />
+                <p class="text-xs mt-1 text-center text-gray-600 line-through">Price: ₹${prod.price}</p>
                 <button onclick="restoreProduct(${index}, ${i})" class="restore-btn">➕</button>
               </div>
             `).join('')}
@@ -211,7 +167,7 @@
     wishlistContainer.innerHTML = wishlistData.map((item, idx) => `
       <div class="flex items-center justify-between p-4 border rounded shadow-sm bg-white">
         <div class="flex gap-3 items-center">
-          <img src="${item.image}" class="w-20 h-20 object-cover rounded border"/>
+          <img src="${item.model_image}" class="w-20 h-20 object-cover rounded border"/>
           <div>
             <a href="#" onclick="goToProductFromWishlist(${idx})" class="text-md font-medium hover:underline block">${item.title}</a>
             <p class="text-sm text-gray-500">View Product</p>
@@ -225,31 +181,30 @@
   }
 
   async function goToProductFromCart(index) {
-  const clickedItem = cartData[index];
-  const response = await fetch("collections.json");
-  const collections = await response.json();
-  const original = collections.find(c => c.title === clickedItem.title);
-  if (original) {
-    localStorage.setItem("selectedCollection", JSON.stringify(original));
-    window.location.href = "product.html";
-  } else {
-    alert("Original product data not found.");
+    const clickedItem = cartData[index];
+    const response = await fetch("collections.json");
+    const collections = await response.json();
+    const original = collections.find(c => c.title === clickedItem.title);
+    if (original) {
+      localStorage.setItem("selectedCollection", JSON.stringify(original));
+      window.location.href = "product.html";
+    } else {
+      alert("Original product data not found.");
+    }
   }
-}
 
-async function goToProductFromWishlist(index) {
-  const clickedItem = wishlistData[index];
-  const response = await fetch("collections.json");
-  const collections = await response.json();
-  const original = collections.find(c => c.title === clickedItem.title);
-  if (original) {
-    localStorage.setItem("selectedCollection", JSON.stringify(original));
-    window.location.href = "product.html";
-  } else {
-    alert("Original product data not found.");
+  async function goToProductFromWishlist(index) {
+    const clickedItem = wishlistData[index];
+    const response = await fetch("collections.json");
+    const collections = await response.json();
+    const original = collections.find(c => c.title === clickedItem.title);
+    if (original) {
+      localStorage.setItem("selectedCollection", JSON.stringify(original));
+      window.location.href = "product.html";
+    } else {
+      alert("Original product data not found.");
+    }
   }
-}
-
 
   function addToWishlist(index) {
     const item = cartData.splice(index, 1)[0];
@@ -270,22 +225,16 @@ async function goToProductFromWishlist(index) {
     const item = cartData[cartIndex];
     item.removedProducts = item.removedProducts || [];
     item.includedProducts = item.includedProducts || [];
-
     item.removedProducts.push(item.includedProducts[productIndex]);
     item.includedProducts.splice(productIndex, 1);
-
     localStorage.setItem("cartItems", JSON.stringify(cartData));
     renderCart();
   }
 
   function restoreProduct(cartIndex, removedIndex) {
     const item = cartData[cartIndex];
-    item.removedProducts = item.removedProducts || [];
-    item.includedProducts = item.includedProducts || [];
-
     item.includedProducts.push(item.removedProducts[removedIndex]);
     item.removedProducts.splice(removedIndex, 1);
-
     localStorage.setItem("cartItems", JSON.stringify(cartData));
     renderCart();
   }
@@ -297,11 +246,11 @@ async function goToProductFromWishlist(index) {
   }
 
   function goToCheckout() {
-  localStorage.setItem("checkoutItems", JSON.stringify(cartData));
-  window.location.href = "checkout.html";
-}
+    localStorage.setItem("checkoutItems", JSON.stringify(cartData));
+    window.location.href = "checkout.html";
+  }
 
-
+  // Initial render
   renderCart();
   renderWishlist();
 </script>

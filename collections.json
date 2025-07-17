@@ -1,101 +1,67 @@
 [
-    {
-      "model_image": "model1_cropped.jpg",
-      "products": [
-        "prod1.jpg",
-        "prod2.jpg",
-        "prod3.jpg",
-        "prod5.jpg"
-      ],
-      "title": "Party Chic - Women",
-      "category": "women party"
-    },
-    {
-      "model_image": "model2_cropped.jpg",
-      "products": [
-        "prod1.jpg",
-        "prod5.jpg",
-        "prod6.jpg",
-        "prod2.jpg"
-      ],
-      "title": "Office Vibe - Women",
-      "category":  "women party"
-    },
-    {
-      "model_image": "model3_cropped.jpg",
-      "products": [
-        "prod1.jpg",
-        "prod7.jpg",
-        "prod3.jpg",
-        "prod1.jpg"
-      ],
-      "title": "Vacation Mode - Women",
-      "category":  "women party"  },
-    {
-      "model_image": "model2_cropped.jpg",
-      "products": [
-        "prod1.jpg",
-        "prod5.jpg",
-        "prod6.jpg",
-        "prod2.jpg"
-      ],
-      "title": "Office Vibe - Women",
-      "category": "women party"
-    },
-    {
-      "model_image": "model1_cropped.jpg",
-      "products": [
-        "prod1.jpg",
-        "prod2.jpg",
-        "prod3.jpg",
-        "prod5.jpg"
-      ],
-      "title": "Party Chic - Women",
-      "category": "women party"
-    },
-    {
-      "model_image": "model2_cropped.jpg",
-      "products": [
-        "prod1.jpg",
-        "prod5.jpg",
-        "prod6.jpg",
-        "prod2.jpg"
-      ],
-      "title": "Office Vibe - Women",
-      "category": "women party"
-    },
-    {
-      "model_image": "model1_cropped.jpg",
-      "products": [
-        "prod1.jpg",
-        "prod2.jpg",
-        "prod3.jpg",
-        "prod5.jpg"
-      ],
-      "title": "Party Chic - Women",
-      "category": "women party"
-    },
-    {
-      "model_image": "model1_cropped.jpg",
-      "products": [
-        "prod1.jpg",
-        "prod2.jpg",
-        "prod3.jpg",
-        "prod5.jpg"
-      ],
-      "title": "Party Chic - Women",
-      "category": "women party"
-    },
-    {
-      "model_image": "model2_cropped.jpg",
-      "products": [
-        "prod1.jpg",
-        "prod5.jpg",
-        "prod6.jpg",
-        "prod2.jpg"
-      ],
-      "title": "Office Vibe - Women",
-      "category": "women party"
-    }
-  ]
-  
+  {
+    "collection_id": "001",
+    "model_image": "images/model1_cropped.jpg",
+    "products": [
+      { "product_id": "101", "image": "images/prod1.jpg", "price": 799 },
+      { "product_id": "102", "image": "images/prod2.jpg", "price": 699 },
+      { "product_id": "103", "image": "images/prod3.jpg", "price": 999 },
+      { "product_id": "104", "image": "images/prod5.jpg", "price": 499 }
+    ],
+    "title": "Party Chic - Women",
+    "category": "women party",
+    "off": 20
+  },
+  {
+    "collection_id": "002",
+    "model_image": "images/model2_cropped.jpg",
+    "products": [
+      { "product_id": "201", "image": "images/prod1.jpg", "price": 799 },
+      { "product_id": "202", "image": "images/prod5.jpg", "price": 499 },
+      { "product_id": "203", "image": "images/prod6.jpg", "price": 899 },
+      { "product_id": "204", "image": "images/prod2.jpg", "price": 699 }
+    ],
+    "title": "Office Vibe - Women",
+    "category": "women party",
+    "off": 15
+  },
+  {
+    "collection_id": "003",
+    "model_image": "images/model3_cropped.jpg",
+    "products": [
+      { "product_id": "301", "image": "images/prod1.jpg", "price": 799 },
+      { "product_id": "302", "image": "images/prod7.jpg", "price": 649 },
+      { "product_id": "303", "image": "images/prod3.jpg", "price": 999 },
+      { "product_id": "304", "image": "images/prod1.jpg", "price": 799 }
+    ],
+    "title": "Vacation Mode - Women",
+    "category": "women party",
+    "off": 25
+  },
+  {
+    "collection_id": "004",
+    "model_image": "images/men1.jpg",
+    "products": [
+      { "product_id": "401", "image": "images/prod1.jpg", "price": 799 },
+      { "product_id": "402", "image": "images/prod7.jpg", "price": 649 },
+      { "product_id": "403", "image": "images/prod3.jpg", "price": 999 },
+      { "product_id": "404", "image": "images/prod1.jpg", "price": 799 }
+    ],
+    "title": "Vacation Mode - Men",
+    "category": "men party",
+    "off": 25
+  },
+  {
+    "collection_id": "005",
+    "model_image": "images/men2.jpg",
+    "products": [
+      { "product_id": "501", "image": "images/prod1.jpg", "price": 799 },
+      { "product_id": "502", "image": "images/prod7.jpg", "price": 649 },
+      { "product_id": "503", "image": "images/prod3.jpg", "price": 999 },
+      { "product_id": "504", "image": "images/prod1.jpg", "price": 799 }
+    ],
+    "title": "Vacation Mode - Men",
+    "category": "men party",
+    "off": 25
+  }
+]

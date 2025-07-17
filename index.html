@@ -6,7 +6,13 @@
   <title>Collection Store</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel&display=swap" rel="stylesheet">
+
   <style>
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Cinzel', serif;
+    letter-spacing: 0.3px;
+  }
     .collection-card:hover {
       background-image: url('https://www.transparenttextures.com/patterns/gplay.png');
       background-color: #fff0f3;
@@ -69,45 +75,57 @@
       const container = document.getElementById('collections-container');
 
       data.forEach((item, index) => {
-  const card = document.createElement('div');
-  card.className = `
-    collection-card border rounded-xl overflow-hidden shadow 
-    transition-all duration-500 transform
-    hover:scale-[1.04] hover:shadow-[0_20px_40px_rgba(0,0,0,0.2)] 
-    hover:-translate-y-1 hover:border-pink-300
-  `;
-  card.setAttribute('data-category', item.category);
+        const totalPrice = item.products.reduce((sum, p) => sum + (p.price || 0), 0);
 
-  card.innerHTML = `
-    <div class="grid grid-cols-2 sm:grid-cols-2 w-full h-auto max-w-[400px] mx-auto sm:max-w-full border rounded-lg overflow-hidden shadow">
-      <!-- Model Image -->
-      <div class="col-span-1 row-span-2 bg-gray-100 overflow-hidden flex items-center justify-center">
-        <img src="${item.model_image}" alt="Model" 
-             class="object-cover object-top w-full h-full max-h-[220px]" />
-      </div>
+        const card = document.createElement('div');
+        card.className = `
+  collection-card border rounded-xl shadow 
+  transition-all duration-500 transform
+  hover:scale-[1.04] hover:shadow-[0_20px_40px_rgba(0,0,0,0.2)] 
+  hover:-translate-y-1 hover:border-pink-300
+  w-full max-w-md h-[360px] flex flex-col overflow-hidden
+`;
 
-      <!-- Product Images Grid -->
-      <div class="col-span-1 grid grid-rows-2 grid-cols-2 gap-1 p-1">
-        ${item.products.slice(0, 4).map(img => `
-          <div class="w-full h-[60px] sm:h-[72px] rounded overflow-hidden border">
-            <img src="${img}" class="w-full h-full object-cover object-center" />
-          </div>
-        `).join('')}
-      </div>
+        card.setAttribute('data-category', item.category);
 
-      <!-- Title + Button Row -->
-      <div class="col-span-2 flex flex-col items-center justify-center text-center px-2 py-3 text-sm sm:text-base">
-        <h3 class="font-semibold truncate">${item.title}</h3>
-        <button class="shop-btn mt-2 w-full bg-black text-white py-1 sm:py-2 rounded text-xs sm:text-sm" data-index="${index}">
-          Shop Collection
-        </button>
-      </div>
+       const totalOriginal = item.products.reduce((sum, p) => sum + p.price, 0);
+const discount = item.off || 0;
+const discountedPrice = Math.round(totalOriginal * (1 - discount / 100));
+card.innerHTML = `
+  <div class="grid grid-cols-2 flex-1">
+    <!-- Fixed-size Model Image -->
+    <div class="w-full h-full overflow-hidden">
+      <img src="${item.model_image}" class="w-full h-full object-cover object-top" />
     </div>
-  `;
 
-  container.appendChild(card);
-});
+    <!-- Product Images Grid -->
+    <div class="grid grid-rows-2 grid-cols-2 gap-1 p-1 w-full h-full">
+      ${item.products.slice(0, 4).map(p => `
+        <div class="w-full h-full rounded overflow-hidden border relative">
+          <img src="${p.image}" class="w-full h-full object-cover object-center" />
+        </div>
+      `).join('')}
+    </div>
+  </div>
 
+  <!-- Title + Price + Button -->
+  <div class="flex flex-col items-center justify-center text-center px-2 py-3 text-sm sm:text-base">
+    <p class="text-gray-700 text-xs sm:text-sm mt-1">${item.title}</p>
+    <div class="flex items-center gap-2">
+      <span class="text-gray-400 line-through text-xs">₹${totalOriginal}</span>
+      <span class="font-semibold text-sm text-pink-600">₹${discountedPrice}</span>
+      <span class="text-green-600 text-xs">(${discount}% OFF)</span>
+    </div>
+    <button class="shop-btn mt-2 w-full bg-black text-white py-1 sm:py-2 rounded text-xs sm:text-sm" data-index="${index}">
+      Shop Collection
+    </button>
+  </div>
+`;
+
+
+
+        container.appendChild(card);
+      });
 
       document.addEventListener('click', async (e) => {
         if (e.target.classList.contains('shop-btn')) {
@@ -121,18 +139,23 @@
       });
 
       const buttons = document.querySelectorAll('[data-filter]');
-      buttons.forEach(btn => {
-        btn.addEventListener('click', () => {
-          const filter = btn.getAttribute('data-filter');
-          const cards = document.querySelectorAll('[data-category]');
-          cards.forEach(card => {
-            const category = card.getAttribute('data-category');
-            card.style.display = (filter === 'all' || category.includes(filter)) ? 'block' : 'none';
-          });
-          buttons.forEach(b => b.classList.remove('bg-black', 'text-white'));
-          btn.classList.add('bg-black', 'text-white');
-        });
-      });
+buttons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const filter = btn.getAttribute('data-filter');
+    const cards = document.querySelectorAll('[data-category]');
+    cards.forEach(card => {
+      const category = card.getAttribute('data-category').toLowerCase();
+      const match =
+        filter === 'all' ||
+        category === filter ||
+        category.startsWith(filter + ' ');
+      card.style.display = match ? 'block' : 'none';
+    });
+    buttons.forEach(b => b.classList.remove('bg-black', 'text-white'));
+    btn.classList.add('bg-black', 'text-white');
+  });
+});
+
     });
   </script>
 </body>

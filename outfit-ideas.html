@@ -6,7 +6,14 @@
   <title>Outfit Ideas</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel&display=swap" rel="stylesheet">
+
   <style>
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Cinzel', serif;
+    letter-spacing: 0.3px;
+  }
+
     @media (max-width: 640px) {
   header {
     flex-direction: column;
@@ -215,11 +222,11 @@
 </head>
 <body>
 
-<header class="flex items-center justify-between px-4 sm:px-8 py-3 border-b shadow-md bg-white">
-<a href="index.html" class="text-3xl sm:text-4xl font-extrabold tracking-tight text-gray-900">COLLECTIONS</a>
+<header class="flex flex-col sm:flex-row items-center justify-between px-4 sm:px-6 py-3 border-b gap-2">
+  <a href="index.html" class="text-xl sm:text-2xl font-bold">COLLECTIONS</a>
   <nav class="flex gap-4 text-sm sm:text-base font-medium">
     <a href="index.html" class="hover:text-pink-600">Home</a>
-    <a href="outfit-ideas.html" class="text-red-600 font-semibold underline">Outfit Ideas</a>
+    <a href="outfit-ideas.html" class="text-red-600 font-semibold hover:underline">Outfit Ideas</a>
     <a href="cart.html" class="hover:text-pink-600">Cart</a>
   </nav>
 </header>
@@ -227,7 +234,7 @@
 
 <main class="max-w-7xl mx-auto p-6">
   <h2 class="text-3xl font-bold text-center mb-4">Outfit Inspo</h2>
-
+ <!-- 
   <div class="flex justify-center gap-4 mb-10">
     <div class="relative">
       <button onclick="toggleFilterOptions()" class="bg-gray-600 text-white px-4 py-1.5 rounded-full text-sm shadow">Filter</button>
@@ -238,7 +245,9 @@
       </div>
     </div>
     <div class="relative">
-      <button onclick="toggleUploadForm()" class="bg-pink-500 text-white px-4 py-1.5 rounded-full text-sm shadow">Upload</button>
+
+
+     <button onclick="toggleUploadForm()" class="bg-pink-500 text-white px-4 py-1.5 rounded-full text-sm shadow">Upload</button> 
       <div id="uploadForm" class="dropdown-panel">
         <h3 class="text-lg font-semibold mb-2 text-pink-600">Upload Outfit</h3>
         <input type="file" id="uploadInput" accept="image/*" class="w-full border p-1 mb-3 text-sm"/>
@@ -251,32 +260,38 @@
       </div>
     </div>
   </div>
-
+-->
   <div id="posts-container" class="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"></div>
 </main>
 
 <script>
-const modelDefaults = [
-  { img: "model1_cropped.jpg", gender: "women", likes: 0, isProduct: true },
-  { img: "model2_cropped.jpg", gender: "women", likes: 0, isProduct: true },
-  { img: "model3_cropped.jpg", gender: "women", likes: 0, isProduct: true }
-];
 
 let allPosts = [], currentSection = "all";
 
-function loadPosts() {
+async function loadPosts() {
   const outfitPosts = JSON.parse(localStorage.getItem("outfitPosts")) || [];
   const modelLikes = JSON.parse(localStorage.getItem("modelLikes")) || {};
-  const modelPosts = modelDefaults.map(m => ({
-    ...m,
-    isProduct: true,
-    likes: modelLikes[m.img] || 0
-  }));
+  
+  // ✅ Load collections.json dynamically
+  let modelPosts = [];
+  try {
+    const res = await fetch("collections.json");
+    const collections = await res.json();
+    modelPosts = collections.map(c => ({
+      img: c.model_image,
+      gender: c.category,
+      likes: modelLikes[c.model_image] || 0,
+      isProduct: true
+    }));
+  } catch (err) {
+    console.error("Error loading collections:", err);
+  }
 
   allPosts = [...modelPosts, ...outfitPosts.map(o => ({ ...o, isProduct: false }))];
   allPosts.sort((a, b) => b.likes - a.likes);
   renderPosts();
 }
+
 function renderPosts() {
   const container = document.getElementById("posts-container");
   const filtered = currentSection === "all" ? allPosts : allPosts.filter(p => p.gender === currentSection);
@@ -387,19 +402,22 @@ async function goToProductByImage(img) {
   try {
     const response = await fetch("collections.json");
     const collections = await response.json();
-    const original = collections.find(c => c.model_image === img);
 
-    if (original) {
-      localStorage.setItem("selectedCollection", JSON.stringify(original));
+    // Match based on full model_image path (e.g., "images/model2_cropped.jpg")
+    const matchedCollection = collections.find(c => c.model_image === img || c.model_image.endsWith("/" + img));
+
+    if (matchedCollection) {
+      localStorage.setItem("selectedCollection", JSON.stringify(matchedCollection));
       window.location.href = "product.html";
     } else {
-      alert(`Original product data not found for image: "${img}"`);
+      alert(`No matching product found for image: "${img}"`);
     }
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    console.error(error);
     alert("Failed to load product data.");
   }
 }
+
 
 loadPosts();
 </script>

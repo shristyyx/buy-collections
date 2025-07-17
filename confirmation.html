@@ -31,7 +31,7 @@
         font-size: 1.75rem;
       }
 
-      p, h2, pre {
+      p {
         font-size: 0.95rem !important;
       }
 
@@ -48,9 +48,10 @@
     <h1 class="text-4xl font-bold text-green-600 mb-4">Thank You! 🎉</h1>
     <p class="text-lg text-gray-700 mb-6">Your order has been placed successfully.</p>
 
-    <div class="text-left bg-white rounded-lg p-5 shadow-inner mb-6">
-      <h2 class="text-xl font-semibold mb-3">Order Summary</h2>
-      <pre id="order-summary" class="whitespace-pre-wrap text-sm text-gray-600"></pre>
+    <div class="bg-white rounded-lg p-6 shadow-inner mb-6">
+      <p class="text-base text-gray-700">
+        We'll reach out to you shortly via <span class="font-semibold text-red-600">Instagram</span> or <span class="font-semibold text-green-600">WhatsApp</span> to confirm your order and shipping details. 💬
+      </p>
     </div>
 
     <a href="index.html" class="inline-block px-6 py-3 bg-red-600 text-white font-semibold rounded-full hover:bg-red-700 transition">
@@ -59,18 +60,7 @@
   </div>
 
   <script>
-    const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-
-    const summary = cartItems.map(item => {
-      const products = item.includedProducts?.length || 0;
-      const price = products * 999;
-      return `• ${item.title}\n   Size: Clothing - ${item.clothingSize}, Shoe - ${item.shoeSize}\n   Items: ${products} × ₹999 = ₹${price}`;
-    }).join('\n\n');
-
-    document.getElementById("order-summary").textContent = summary || "No order details available.";
-
-    // Optional: clear cart after successful order
-    localStorage.removeItem("cartItems");
+    localStorage.removeItem("cartItems"); // clear cart after successful order
   </script>
 
 </body>

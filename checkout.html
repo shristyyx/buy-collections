@@ -4,121 +4,159 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Checkout</title>
+
+  <!-- Tailwind CSS CDN -->
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
   <style>
+    /* Background and container */
     body {
       background-image: url('https://i.pinimg.com/originals/ff/0a/6b/ff0a6b58cebb6012dbd8f69f39453f12.jpg');
       background-size: cover;
       background-attachment: fixed;
       font-family: 'Inter', sans-serif;
     }
+
     .form-container {
       backdrop-filter: blur(20px);
-      background-color: rgba(255,255,255,0.9);
+      background-color: rgba(255, 255, 255, 0.9);
       border-radius: 16px;
     }
 
+    /* Responsive tweaks */
     @media (max-width: 640px) {
-      h2 {
-        font-size: 1.5rem;
-      }
-
-      label, input, textarea, button {
-        font-size: 0.85rem !important;
-      }
-
-      .form-container {
-        padding: 1.25rem !important;
-      }
-
-      #order-summary li {
-        font-size: 0.8rem;
-      }
-
-      #total-amount {
-        font-size: 1rem;
-      }
+      h2 { font-size: 1.5rem; }
+      label, input, textarea, button { font-size: 0.85rem !important; }
+      .form-container { padding: 1.25rem !important; }
+      #order-summary li { font-size: 0.8rem; }
+      #total-amount { font-size: 1rem; }
     }
   </style>
 </head>
-<body class="text-gray-800">
 
-<div class="min-h-screen flex items-center justify-center px-2 sm:px-4 py-6">
-  <div class="max-w-2xl w-full form-container p-6 sm:p-8 shadow-xl">
-    <h2 class="text-2xl sm:text-3xl font-bold mb-6 text-center text-pink-600">Complete Your Order</h2>
-    <form id="checkout-form" class="space-y-4">
-      <div>
-        <label class="block font-medium">Full Name</label>
-        <input type="text" name="name" required class="w-full border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-400">
-      </div>
-      <div>
-        <label class="block font-medium">Email</label>
-        <input type="email" name="email" required class="w-full border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-400">
-      </div>
-      <div>
-        <label class="block font-medium">Phone Number</label>
-        <input type="text" name="phone" required class="w-full border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-400">
-      </div>
-      <div>
-        <label class="block font-medium">Shipping Address</label>
-        <textarea name="address" rows="3" required class="w-full border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-400"></textarea>
-      </div>
-      <div class="bg-pink-50 border border-pink-200 p-4 rounded-md">
-        <h3 class="font-semibold mb-2 text-pink-600">Order Summary</h3>
-        <ul id="order-summary" class="text-sm space-y-1"></ul>
-        <p class="font-medium mt-2">Total: ₹<span id="total-amount">0</span></p>
-      </div>
-      <button type="submit" class="w-full bg-pink-600 text-white py-2 rounded-md hover:bg-pink-700 transition">Place Order</button>
-    </form>
-  </div>
+<body class="text-gray-800">
+  <div class="min-h-screen flex items-center justify-center px-2 sm:px-4 py-6">
+    <div class="max-w-2xl w-full form-container p-6 sm:p-8 shadow-xl">
+      <h2 class="text-2xl sm:text-3xl font-bold mb-6 text-center text-pink-600">Complete Your Order</h2>
+
+      <p class="text-sm sm:text-base text-gray-700 text-center mb-4">
+        <strong>Note:</strong> We're a new emerging business, so we’ll personally reach out via Instagram or phone to confirm your order and share payment details.
+      </p>
+
+      <!-- Checkout Form -->
+      <form id="checkout-form" class="space-y-4">
+        <div>
+          <label class="block font-medium">Full Name</label>
+          <input type="text" name="name" required class="w-full border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-400">
+        </div>
+
+        <div>
+          <label class="block font-medium">Email</label>
+          <input type="email" name="email" required class="w-full border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-400">
+        </div>
+
+        <div>
+          <label class="block font-medium">Phone Number</label>
+          <input type="text" name="phone" required class="w-full border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-400">
+        </div>
+
+        <div>
+  <label class="block font-medium">Instagram Handle</label>
+  <input type="text" name="instagram" placeholder=""
+    class="w-full border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-400">
 </div>
 
-<script>
-  emailjs.init("V2PB7KHpork0EN66Y");
 
-  const cartData = JSON.parse(localStorage.getItem("cartItems")) || [];
-  const orderSummary = document.getElementById("order-summary");
-  const totalAmountEl = document.getElementById("total-amount");
-  let total = 0;
+        <div>
+          <label class="block font-medium">Shipping Address</label>
+          <textarea name="address" rows="3" required class="w-full border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-400"></textarea>
+        </div>
 
-  cartData.forEach(item => {
-    const count = item.includedProducts?.length || 0;
-    const price = count * 999;
-    total += price;
-    const li = document.createElement("li");
-    li.textContent = `${item.title} - ₹${price}`;
-    orderSummary.appendChild(li);
-  });
+        <!-- Order Summary -->
+        <div class="bg-pink-50 border border-pink-200 p-4 rounded-md">
+          <h3 class="font-semibold mb-2 text-pink-600">Order Summary</h3>
+          <ul id="order-summary" class="text-sm space-y-1"></ul>
+          <p class="font-medium mt-2">Total: ₹<span id="total-amount">0</span></p>
+        </div>
 
-  totalAmountEl.textContent = total;
+        <button type="submit" class="w-full bg-pink-600 text-white py-2 rounded-md hover:bg-pink-700 transition">Place Order</button>
+      </form>
+    </div>
+  </div>
 
-  document.getElementById("checkout-form").addEventListener("submit", function(e) {
-    e.preventDefault();
+  <script>
+    // Initialize EmailJS
+    emailjs.init("V2PB7KHpork0EN66Y");
 
-    const formData = new FormData(this);
-    const orderDetails = cartData.map(item => `${item.title} (₹${(item.includedProducts?.length || 0) * 999})`).join(", ");
+    const cartData = JSON.parse(localStorage.getItem("cartItems")) || [];
+    const orderSummary = document.getElementById("order-summary");
+    const totalAmountEl = document.getElementById("total-amount");
+    let total = 0;
 
-    const data = {
-      name: formData.get("name"),
-      email: formData.get("email"),
-      phone: formData.get("phone"),
-      address: formData.get("address"),
-      order: orderDetails,
-      total: total
-    };
+    // Populate order summary from cart data
+    cartData.forEach(item => {
+      const count = item.includedProducts?.length || 0;
+      const price = count * 999;
+      total += price;
 
-    emailjs.send("service_ytjw67v", "template_0wdcbd6", data)
-      .then(() => {
-        localStorage.removeItem("cartItems");
-        window.location.href = "confirmation.html";
-      })
-      .catch(err => {
-        console.error("Error:", err);
-        alert("Failed to send order. Please try again.");
-      });
-  });
-</script>
+      const li = document.createElement("li");
+      li.textContent = `${item.title} - ₹${price}`;
+      orderSummary.appendChild(li);
+    });
+    totalAmountEl.textContent = total;
 
+    document.getElementById("checkout-form").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const formData = new FormData(this);
+
+  console.log("Form Submitted");
+  console.log("Cart Data:", cartData);
+
+ const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+const collectionIds = cartItems.map(item => item.collection_id).join(", ");
+const productIds = cartItems
+  .flatMap(item => item.includedProducts.map(p => p.product_id))
+  .join(", ");
+
+let orderDetails = cartItems.map((item, idx) => {
+  return `Collection ${idx + 1} - ${item.title} (${item.category}) (ID: ${item.collection_id})
+Clothing Size: ${item.clothingSize || "N/A"}
+Shoe Size: ${item.shoeSize || "N/A"}
+${item.includedProducts.map((p, i) => `  Product ${i + 1} (ID: ${p.product_id}) - ₹${p.price}`).join("\n")}`;
+}).join("\n\n");
+
+const data = {
+  name: formData.get("name"),
+  email: formData.get("email"),
+  phone: formData.get("phone"),
+  instagram: formData.get("instagram"),
+  address: formData.get("address"),
+  collectionIds: collectionIds,  // 👈 match template
+  productIds: productIds,        // 👈 match template
+  order: orderDetails,           // 👈 match template
+  total: total
+};
+
+
+
+// Now you can send `data` via EmailJS, Formspree, or a backend
+console.log("Sending this order:", data);
+
+
+  emailjs.send("service_ytjw67v", "template_0wdcbd6", data)
+    .then(() => {
+      localStorage.removeItem("cartItems");
+      window.location.href = "confirmation.html";
+    })
+    .catch(err => {
+      console.error("Error:", err);
+      alert("Failed to send order. Please try again.");
+    });
+});
+
+  </script>
 </body>
 </html>

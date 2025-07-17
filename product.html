@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Product Detail</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel&display=swap" rel="stylesheet">
+
   <style>
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Cinzel', serif;
+    letter-spacing: 0.6px;
+  }
     .thumb-selected { border: 2px solid black; }
     .zoom-image:hover { transform: scale(1.05); transition: transform 0.3s ease; }
     .size-btn.selected { background-color: #f87171; color: white; border-color: #f87171; }
@@ -17,69 +24,95 @@
       50% { transform: scale(1.1); }
     }
 
-  @media (max-width: 640px) {
-    /* Product Detail Section Tweaks */
-    #product-detail .flex.md\\:flex-row {
-      flex-direction: column;
-    }
+    .removed {
+  opacity: 0.35;
+  filter: grayscale(60%);
+  background-color: #fef2f2;
+  border: 2px dashed #f87171;
+  position: relative;
+  transition: all 0.3s ease;
+}
 
-    #product-detail .flex.md\\:flex-row > .flex {
-      flex-direction: column-reverse;
-    }
+/* Re-enable interaction only on the restore button */
+.removed button.restore-btn {
+  pointer-events: auto;
+}
 
-    #product-detail .flex.md\\:flex-row > .flex > div:first-child {
-      flex-direction: row;
-      overflow-x: auto;
-    }
+.removed img {
+  opacity: 0.5;
+}
 
-    #product-detail .flex.md\\:flex-row > .flex > div:first-child > div {
-      flex-shrink: 0;
-    }
+.removed .text-gray-600,
+.removed .font-semibold {
+  text-decoration: line-through;
+  color: #a1a1aa;
+}
 
-    #product-detail h2,
-    #product-detail p,
-    #product-detail button,
-    #reviews-section h2,
-    #reviews-section h3 {
-      font-size: 90% !important;
-    }
+.restore-btn {
+  color: #15803d;
+}
 
-    #product-detail .w-\\[500px\\],
-    #product-detail .h-\\[500px\\] {
-      width: 100% !important;
-      height: auto !important;
-    }
+.remove-btn {
+  color: #dc2626;
+}
 
-    /* Related Products: 2 per row on small screens */
-    #related-list {
-      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    }
+    @media (max-width: 640px) {
+      #product-detail .flex.md\:flex-row {
+        flex-direction: column;
+      }
 
-    #related-list > div {
-      width: auto !important;
-    }
+      
 
-    #related-list img {
-      height: 150px !important;
-    }
+      #product-detail .flex.md\:flex-row > .flex > div:first-child {
+        flex-direction: row;
+        overflow-x: auto;
+      }
 
-    #related-list p {
-      font-size: 90%;
-    }
+      #product-detail .flex.md\:flex-row > .flex > div:first-child > div {
+        flex-shrink: 0;
+      }
 
-    #related-list button {
-      font-size: 10px;
-    }
+      #product-detail h2,
+      #product-detail p,
+      #product-detail button,
+      #reviews-section h2,
+      #reviews-section h3 {
+        font-size: 90% !important;
+      }
 
-    /* Smaller review box text */
-    #review-list p,
-    #review-list span,
-    #review-list .text-sm {
-      font-size: 90% !important;
-    }
-  }
-</style>
+      #product-detail .w-\[500px\],
+      #product-detail .h-\[500px\] {
+        width: 100% !important;
+        height: auto !important;
+      }
 
+      #related-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      }
+
+      #related-list > div {
+        width: auto !important;
+      }
+
+      #related-list img {
+        height: 150px !important;
+      }
+
+      #related-list p {
+        font-size: 90%;
+      }
+
+      #related-list button {
+        font-size: 10px;
+      }
+
+      #review-list p,
+      #review-list span,
+      #review-list .text-sm {
+        font-size: 90% !important;
+      }
+    }
+  </style>
 </head>
 <body class="bg-white text-gray-800 font-sans">
 
@@ -132,10 +165,12 @@
 
 <script>
   const data = JSON.parse(localStorage.getItem('selectedCollection')) || {};
-  const allImages = [data.model_image, ...(data.products || [])];
+  const allImages = [data.model_image, ...(data.products || []).map(p => p.image)];
   let selectedClothingSize = "M";
   let selectedShoeSize = "UK 7";
   let removedIndexes = new Set();
+
+  const offPercent = data.off || 0;
 
   const container = document.getElementById("product-detail");
   container.innerHTML = `
@@ -193,15 +228,27 @@
         <div class="space-y-2 mb-6" id="productList">
           ${data.products.map((img, i) => `
             <div class="flex items-center gap-3 p-2 border rounded" id="product-${i}">
-              <img src="${img}" class="w-14 h-14 object-cover rounded" />
+            <img src="${data.products[i].image}" class="w-14 h-14 object-cover rounded" />
               <div class="flex-1">
                 <p class="text-sm font-medium">Product ${i + 1}</p>
-                <p class="text-xs text-gray-600">Price: ₹999</p>
+                <p class="text-xs text-gray-600">Price: ₹${data.products[i].price}</p>
               </div>
               <button onclick="removeProduct(${i})" class="text-xs text-red-500 hover:underline">❌ Remove</button>
             </div>
           `).join("")}
         </div>
+
+
+
+       <div class="text-2xl font-bold text-left mb-4 text-gray-800">
+  <span class="line-through text-gray-400 text-lg">₹<span id="original-price">0</span></span>
+  <span class="text-pink-600 ml-2">₹<span id="discounted-price">0</span></span>
+  <span id="discount-label" class="text-green-600 text-sm ml-1"></span>
+</div>
+
+
+
+
         <div class="flex items-center gap-3">
           <button id="addToCartBtn" onclick="addToCart()" class="bg-red-600 hover:bg-red-700 text-white w-4/5 py-2 rounded transition-all duration-300">
             Add to Cart
@@ -212,7 +259,10 @@
         </div>
       </div>
     </div>
+
   `;
+
+          updateTotalPrice();
 
   function setActiveImage(src, clickedThumb) {
   // Update both mobile and desktop preview images
@@ -241,39 +291,50 @@
   }
 
   function removeProduct(index) {
-    removedIndexes.add(index);
-    const productDiv = document.getElementById(`product-${index}`);
-    if (productDiv) productDiv.remove();
-  }
+  removedIndexes.add(index);
+  updateTotalPrice();
+}
+
+function restoreProduct(index) {
+  removedIndexes.delete(index);
+  updateTotalPrice();
+}
 
   function getActiveProducts() {
     return data.products.filter((_, i) => !removedIndexes.has(i));
   }
+function addToCart() {
+  const cart = JSON.parse(localStorage.getItem("cartItems")) || [];
 
-  function addToCart() {
-    const cart = JSON.parse(localStorage.getItem("cartItems")) || [];
-    cart.push({
-      title: data.title,
-      image: data.model_image,
-      category: data.category,
-      price: data.products.length * 999 - 1000,
-      clothingSize: selectedClothingSize,
-      shoeSize: selectedShoeSize,
-      includedProducts: getActiveProducts()
-    });
-    localStorage.setItem("cartItems", JSON.stringify(cart));
-    const btn = document.getElementById("addToCartBtn");
-    btn.innerHTML = "🎉 Added to Cart!";
-    btn.classList.remove("bg-red-600", "hover:bg-red-700");
-    btn.classList.add("bg-green-600", "hover:bg-green-700", "bounce");
-    setTimeout(() => btn.classList.remove("bounce"), 600);
-  }
+  cart.push({
+    collection_id: data.collection_id, // ✅ Use collection_id from JSON
+    title: data.title,
+    model_image: data.model_image,
+    category: data.category,
+    price: getActiveProducts().reduce((sum, p) => sum + p.price, 0),
+    clothingSize: selectedClothingSize,
+    shoeSize: selectedShoeSize,
+    includedProducts: getActiveProducts().map(p => ({
+      ...p,
+      product_id: p.product_id // ✅ Use product_id from each product
+    }))
+  });
+
+  localStorage.setItem("cartItems", JSON.stringify(cart));
+
+  const btn = document.getElementById("addToCartBtn");
+  btn.innerHTML = "🎉 Added to Cart!";
+  btn.classList.remove("bg-red-600", "hover:bg-red-700");
+  btn.classList.add("bg-green-600", "hover:bg-green-700", "bounce");
+  setTimeout(() => btn.classList.remove("bounce"), 600);
+}
+
 
   function addToWishlist() {
     const wishlist = JSON.parse(localStorage.getItem("wishlistItems")) || [];
     wishlist.push({
       title: data.title,
-      image: data.model_image,
+      model_image: data.model_image,
       category: data.category,
       price: data.products.length * 999 - 1000,
       clothingSize: selectedClothingSize,
@@ -299,7 +360,8 @@
           <div class="p-3">
             <p class="text-sm font-semibold text-gray-800 truncate">${item.title}</p>
             <p class="text-xs text-gray-500">Category: ${item.category}</p>
-            <p class="text-xs text-pink-600">₹${item.products.length * 999 - 1000}</p>
+            <p class="text-xs text-pink-600">₹${item.products.reduce((sum, p) => sum + p.price, 0)}
+</p>
             <button onclick='selectRelated(${JSON.stringify(item)})'
               class="mt-2 inline-block text-[11px] bg-pink-100 text-pink-600 px-2 py-1 rounded-full hover:bg-pink-200 transition">
               View →
@@ -352,6 +414,46 @@ function submitReview() {
   setRating(0);
   renderReviews();
 }
+
+function getActiveProducts() {
+  return data.products.filter((_, i) => !removedIndexes.has(i));
+}
+function updateTotalPrice() {
+  const activeProducts = getActiveProducts();
+  const originalPrice = activeProducts.reduce((sum, p) => sum + p.price, 0);
+  const discount = data.off || 0;
+  const discountedPrice = Math.round(originalPrice * (1 - discount / 100));
+
+  // Update DOM prices
+  document.getElementById("original-price").textContent = originalPrice;
+  document.getElementById("discounted-price").textContent = discountedPrice;
+  document.getElementById("discount-label").textContent = `(${discount}% OFF)`;
+
+  // Update product list UI
+  const productList = document.getElementById("productList");
+  productList.innerHTML = data.products.map((p, i) => {
+    const isRemoved = removedIndexes.has(i);
+    return `
+      <div class="flex items-center gap-3 p-2 border rounded ${isRemoved ? 'removed' : ''}" id="product-${i}">
+        <img src="${p.image}" class="w-14 h-14 object-cover rounded" />
+        <div class="flex-1">
+          <p class="text-sm font-medium">Product ${i + 1}</p>
+          <p class="text-xs text-gray-600">
+            <span class="${isRemoved ? 'line-through text-gray-400' : 'font-semibold'}">₹${p.price}</span>
+          </p>
+        </div>
+        <button onclick="${isRemoved ? `restoreProduct(${i})` : `removeProduct(${i})`}" 
+                class="text-xs ${isRemoved ? 'restore-btn' : 'remove-btn'} hover:underline">
+          ${isRemoved ? '➕ Restore' : '❌ Remove'}
+        </button>
+      </div>`;
+  }).join('');
+}
+
+
+
+
+
 
 function renderReviews() {
   const reviewList = document.getElementById("review-list");
