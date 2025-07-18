@@ -115,8 +115,9 @@
       const included = item.includedProducts || [];
       const removed = item.removedProducts || [];
 
-      const itemTotal = included.reduce((sum, p) => sum + p.price, 0);
-      total += itemTotal;
+      const itemTotal = item.price || 0;
+total += itemTotal;
+
 
       return `
         <div class="p-4 border rounded shadow-sm bg-white space-y-3">

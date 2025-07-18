@@ -95,15 +95,16 @@
     let total = 0;
 
     // Populate order summary from cart data
-    cartData.forEach(item => {
-      const count = item.includedProducts?.length || 0;
-      const price = count * 999;
-      total += price;
+   cartData.forEach(item => {
+  const itemTotal = item.price || 0;
+  total += itemTotal;
 
-      const li = document.createElement("li");
-      li.textContent = `${item.title} - ₹${price}`;
-      orderSummary.appendChild(li);
-    });
+  const li = document.createElement("li");
+  li.textContent = `${item.title} - ₹${itemTotal}`;
+  orderSummary.appendChild(li);
+});
+
+
     totalAmountEl.textContent = total;
 
     document.getElementById("checkout-form").addEventListener("submit", function(e) {

@@ -299,20 +299,25 @@ function restoreProduct(index) {
   function getActiveProducts() {
     return data.products.filter((_, i) => !removedIndexes.has(i));
   }
-function addToCart() {
+  function addToCart() {
   const cart = JSON.parse(localStorage.getItem("cartItems")) || [];
 
+  const activeProducts = getActiveProducts();
+  const originalPrice = activeProducts.reduce((sum, p) => sum + p.price, 0);
+  const discount = data.off || 0;
+  const discountedPrice = Math.round(originalPrice * (1 - discount / 100));
+
   cart.push({
-    collection_id: data.collection_id, // ✅ Use collection_id from JSON
+    collection_id: data.collection_id,
     title: data.title,
     model_image: data.model_image,
     category: data.category,
-    price: getActiveProducts().reduce((sum, p) => sum + p.price, 0),
+    price: discountedPrice, // ✅ Only discounted price is stored
     clothingSize: selectedClothingSize,
     shoeSize: selectedShoeSize,
-    includedProducts: getActiveProducts().map(p => ({
+    includedProducts: activeProducts.map(p => ({
       ...p,
-      product_id: p.product_id // ✅ Use product_id from each product
+      product_id: p.product_id
     }))
   });
 
@@ -324,7 +329,6 @@ function addToCart() {
   btn.classList.add("bg-green-600", "hover:bg-green-700", "bounce");
   setTimeout(() => btn.classList.remove("bounce"), 600);
 }
-
 
   function addToWishlist() {
     const wishlist = JSON.parse(localStorage.getItem("wishlistItems")) || [];
