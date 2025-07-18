@@ -34,6 +34,28 @@
   pointer-events: auto;
 }
 
+#productList::-webkit-scrollbar {
+  width: 6px;
+}
+#productList::-webkit-scrollbar-thumb {
+  background-color: #aaa;
+  border-radius: 4px;
+}
+
+  .custom-scroll::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .custom-scroll::-webkit-scrollbar-thumb {
+    background: #aaa;
+    border-radius: 3px;
+  }
+
+  .custom-scroll::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+
 .removed img {
   opacity: 0.5;
 }
@@ -52,11 +74,23 @@
   color: #dc2626;
 }
 
+
     @media (max-width: 640px) {
       #product-detail .flex.md\:flex-row {
         flex-direction: column;
       }
 
+        ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #aaa;
+    border-radius: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
       
 
       #product-detail .flex.md\:flex-row > .flex > div:first-child {
@@ -112,14 +146,30 @@
 </head>
 <body class="bg-white text-gray-800 font-sans">
 
-<header class="flex flex-col sm:flex-row items-center justify-between px-4 sm:px-6 py-3 border-b gap-2">
+<header class="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 border-b">
+  <!-- Left: Logo/Title -->
   <a href="index.html" class="text-xl sm:text-2xl font-bold">COLLECTIONS</a>
-  <nav class="flex gap-4 text-sm sm:text-base">
-    <a href="index.html" class="hover:underline">Home</a>
-    <a href="outfit-ideas.html" class="hover:underline">Outfit Ideas</a>
-    <a href="cart.html" class="hover:underline">Cart</a>
-  </nav>
+
+  <!-- Right: Icons -->
+  <div class="flex items-center gap-4">
+    <!-- Outfit Ideas Icon -->
+    <a href="outfit-ideas.html" title="Outfit Ideas">
+      <img src="https://img.icons8.com/ios-filled/100/hanger.png" alt="Outfit Ideas"
+        class="w-8 h-8 sm:w-9 sm:h-9 hover:scale-110 transition-transform duration-300" />
+    </a>
+
+    <!-- Cart Icon -->
+    <button id="cart-button" onclick="location.href='cart.html'" class="relative">
+      <img src="https://img.icons8.com/ios-filled/100/shopping-cart.png"
+        class="w-9 h-9 sm:w-10 sm:h-10" alt="Cart" />
+      <span id="cart-count"
+        class="absolute -top-1 -right-1 bg-pink-600 text-white text-[10px] font-semibold rounded-full w-4 h-4 flex items-center justify-center shadow-md">
+        0
+      </span>
+    </button>
+  </div>
 </header>
+
 
 <main class="p-4 max-w-5xl mx-auto">
   <div id="product-detail" class="bg-white rounded-lg mb-10"></div>
@@ -158,7 +208,6 @@
     </div>
   </div>
 </section>
-
 <script>
   const data = JSON.parse(localStorage.getItem('selectedCollection')) || {};
   const allImages = [data.model_image, ...(data.products || []).map(p => p.image)];
@@ -170,41 +219,55 @@
 
   const container = document.getElementById("product-detail");
   container.innerHTML = `
-      <div class="flex flex-col md:flex-row gap-6 items-start">
-            <div class="hidden sm:flex gap-4 w-full md:w-7/12">
-          <div class="flex flex-col gap-2">
-            ${allImages.map((img, index) => `
-              <div class="w-24 h-24 overflow-hidden border rounded">
-                <img src="${img}" onclick="setActiveImage('${img}', this)"
-                    class="w-[60px] h-[60px] object-cover cursor-pointer rounded border ${index === 0 ? 'thumb-selected' : ''}" />
-              </div>
-            `).join('')}
-          </div>
-          <div class="w-[500px] h-[500px] border rounded overflow-hidden flex items-center justify-center">
-            <img id="mainImage" src="${data.model_image}" style="width:500px; height:500px;" class="object-cover zoom-image" />
-          </div>
+    <div class="flex flex-col md:flex-row gap-6 items-start">
+<div class="hidden sm:flex gap-4 w-full md:w-7/12">
+  <!-- 🔽 Scrollable vertical thumbnails -->
+<div class="flex flex-col gap-2 overflow-y-auto h-[340px] pr-1 scroll-smooth flex-shrink-0">
+  ${allImages.map((img, index) => `
+    <div class="w-20 h-20 flex-shrink-0 border rounded overflow-hidden">
+      <img src="${img}" onclick="setActiveImage('${img}', this)"
+           class="w-full h-full object-cover cursor-pointer rounded border ${index === 0 ? 'thumb-selected' : ''}" />
+    </div>
+  `).join('')}
+</div>
 
-        </div>
-        <!-- ✅ Mobile Version (separate layout) -->
-        <!-- ✅ Mobile Version (desktop-style fixed preview size) -->
-<div class="flex sm:hidden flex-col gap-2 w-full items-center">
-  <div class="w-[300px] h-[300px] border rounded overflow-hidden flex items-center justify-center">
-    <img id="mainImage" src="${data.model_image}" style="width:300px; height:300px;" class="object-cover zoom-image" />
-  </div>
-  
-  <div class="flex flex-row gap-2 overflow-x-auto mt-2 px-1 w-full justify-center">
-    ${allImages.map((img, index) => `
-      <div class="w-20 h-20 flex-shrink-0 border rounded overflow-hidden">
-        <img src="${img}" onclick="setActiveImage('${img}', this)"
-             class="w-full h-full object-cover cursor-pointer rounded border ${index === 0 ? 'thumb-selected' : ''}" />
-      </div>
-    `).join('')}
+
+
+
+
+  <!-- 🖼️ Main Image -->
+  <div class="w-[400px] h-[400px] border rounded overflow-hidden flex items-center justify-center">
+    <img id="mainImage" src="${data.model_image}" class="w-full h-full object-cover zoom-image" />
   </div>
 </div>
 
 
+
+
+
+      <!-- ✅ Mobile View -->
+      <div class="flex sm:hidden flex-col gap-2 w-full items-center">
+        <div class="w-[300px] h-[300px] border rounded overflow-hidden flex items-center justify-center">
+          <img id="mainImage" src="${data.model_image}" style="width:300px; height:300px;" class="object-cover zoom-image" />
+        </div>
+
+        <!-- Scrollable Horizontal Thumbnails -->
+        <div class="w-full overflow-x-auto">
+          <div class="flex gap-2 w-max px-2">
+            ${allImages.map((img, index) => `
+              <div class="w-20 h-20 flex-shrink-0 border rounded overflow-hidden">
+                <img src="${img}" onclick="setActiveImage('${img}', this)"
+                     class="w-full h-full object-cover cursor-pointer rounded border ${index === 0 ? 'thumb-selected' : ''}" />
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+
+      <!-- ✅ Product Details -->
       <div class="w-full md:w-5/12">
         <h2 class="text-xl font-semibold mb-2">${data.title}</h2>
+
         <div class="mb-3">
           <div id="clothingSizeOptions" class="flex gap-2 flex-wrap">
             ${["XS", "S", "M", "L", "XL"].map(size => `
@@ -213,6 +276,7 @@
             `).join("")}
           </div>
         </div>
+
         <div class="mb-3">
           <div id="shoeSizeOptions" class="flex gap-2 flex-wrap">
             ${["UK 5", "UK 6", "UK 7", "UK 8"].map(size => `
@@ -221,10 +285,12 @@
             `).join("")}
           </div>
         </div>
-        <div class="space-y-2 mb-6" id="productList">
+
+        <!-- ✅ Scrollable Product List -->
+        <div class="space-y-2 mb-6 overflow-y-auto pr-1" id="productList" style="max-height: 18rem;">
           ${data.products.map((img, i) => `
             <div class="flex items-center gap-3 p-2 border rounded" id="product-${i}">
-            <img src="${data.products[i].image}" class="w-14 h-14 object-cover rounded" />
+              <img src="${data.products[i].image}" class="w-14 h-14 object-cover rounded" />
               <div class="flex-1">
                 <p class="text-sm font-medium">Product ${i + 1}</p>
                 <p class="text-xs text-gray-600">Price: ₹${data.products[i].price}</p>
@@ -234,17 +300,14 @@
           `).join("")}
         </div>
 
+        <!-- ✅ Pricing Section -->
+        <div class="text-2xl font-bold text-left mb-4 text-gray-800">
+          <span class="line-through text-gray-400 text-lg">₹<span id="original-price">0</span></span>
+          <span class="text-pink-600 ml-2">₹<span id="discounted-price">0</span></span>
+          <span id="discount-label" class="text-green-600 text-sm ml-1"></span>
+        </div>
 
-
-       <div class="text-2xl font-bold text-left mb-4 text-gray-800">
-  <span class="line-through text-gray-400 text-lg">₹<span id="original-price">0</span></span>
-  <span class="text-pink-600 ml-2">₹<span id="discounted-price">0</span></span>
-  <span id="discount-label" class="text-green-600 text-sm ml-1"></span>
-</div>
-
-
-
-
+        <!-- ✅ Action Buttons -->
         <div class="flex items-center gap-3">
           <button id="addToCartBtn" onclick="addToCart()" class="bg-red-600 hover:bg-red-700 text-white w-4/5 py-2 rounded transition-all duration-300">
             Add to Cart
@@ -255,8 +318,8 @@
         </div>
       </div>
     </div>
-
   `;
+
 
           updateTotalPrice();
 
@@ -328,6 +391,8 @@ function restoreProduct(index) {
   btn.classList.remove("bg-red-600", "hover:bg-red-700");
   btn.classList.add("bg-green-600", "hover:bg-green-700", "bounce");
   setTimeout(() => btn.classList.remove("bounce"), 600);
+
+    updateCartCount();
 }
 
   function addToWishlist() {
@@ -488,7 +553,16 @@ function renderReviews() {
 
 renderReviews();
 
+      function updateCartCount() {
+    const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    document.getElementById('cart-count').textContent = cartItems.length;
+  }
+
+  // Call it once on page load
+  updateCartCount();
+
 </script>
+<div class="h-10"></div>
 
 </body>
 </html>

@@ -36,14 +36,30 @@
 </head>
 <body class="bg-white text-gray-800 font-sans">
   <!-- Navbar -->
-  <header class="flex flex-col sm:flex-row items-center justify-between px-4 sm:px-6 py-3 sm:py-4 border-b space-y-2 sm:space-y-0">
-    <a href="index.html" class="text-xl sm:text-2xl font-bold">COLLECTIONS</a>
-    <nav class="flex gap-4 text-sm sm:text-base">
-      <a href="#" class="hover:underline font-bold text-red-600">Home</a>
-      <a href="outfit-ideas.html" class="hover:underline">Outfit Ideas</a>
-      <a href="cart.html" class="hover:underline">Cart</a>
-    </nav>
-  </header>
+<header class="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 border-b">
+  <!-- Left: Logo/Title -->
+  <a href="index.html" class="text-xl sm:text-2xl font-bold">COLLECTIONS</a>
+
+  <!-- Right: Icons -->
+  <div class="flex items-center gap-4">
+    <!-- Outfit Ideas Icon -->
+    <a href="outfit-ideas.html" title="Outfit Ideas">
+      <img src="https://img.icons8.com/ios-filled/100/hanger.png" alt="Outfit Ideas"
+        class="w-8 h-8 sm:w-9 sm:h-9 hover:scale-110 transition-transform duration-300" />
+    </a>
+
+    <!-- Cart Icon -->
+    <button id="cart-button" onclick="location.href='cart.html'" class="relative">
+      <img src="https://img.icons8.com/ios-filled/100/shopping-cart.png"
+        class="w-9 h-9 sm:w-10 sm:h-10" alt="Cart" />
+      <span id="cart-count"
+        class="absolute -top-1 -right-1 bg-pink-600 text-white text-[10px] font-semibold rounded-full w-4 h-4 flex items-center justify-center shadow-md">
+        0
+      </span>
+    </button>
+  </div>
+</header>
+
 
   <!-- Page Title + Filter Buttons -->
   <section class="p-4 sm:p-6 text-center">
@@ -153,6 +169,16 @@ buttons.forEach(btn => {
 });
 
     });
+
+    function updateCartCount() {
+    const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    document.getElementById('cart-count').textContent = cartItems.length;
+  }
+
+  // Call it once on page load
+  updateCartCount();
   </script>
+  <div class="h-10"></div>
+
 </body>
 </html>

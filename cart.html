@@ -26,7 +26,7 @@
 
     /* Background and cart container styling */
     body {
-      background-image: url("https://i.pinimg.com/736x/a2/b6/34/a2b6347ada1b8aa10b78706a78bf405d.jpg");
+      background-color: white;      
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
@@ -58,20 +58,31 @@
 <body class="text-gray-800 font-sans">
 
   <!-- Header -->
-  <header class="flex flex-col sm:flex-row items-center justify-between px-4 sm:px-6 py-3 border-b gap-2 bg-white shadow-md">
-    <a href="index.html" class="text-xl sm:text-2xl font-bold">COLLECTIONS</a>
-    <nav class="flex gap-4 text-sm sm:text-base">
-      <a href="index.html" class="hover:underline">Home</a>
-      <a href="outfit-ideas.html" class="hover:underline">Outfit Ideas</a>
-      <a href="cart.html" class="hover:underline font-bold text-red-600">Cart</a>
-    </nav>
+    <header class="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 border-b">
+  <!-- Left: Logo/Title -->
+  <a href="index.html" class="text-xl sm:text-2xl font-bold">COLLECTIONS</a>
+
+  <!-- Right: Icons -->
+  <div class="flex items-center gap-4">
+    <!-- Outfit Ideas Icon -->
+    <a href="outfit-ideas.html" title="Outfit Ideas">
+      <img src="https://img.icons8.com/ios-filled/100/hanger.png" alt="Outfit Ideas"
+        class="w-8 h-8 sm:w-9 sm:h-9 hover:scale-110 transition-transform duration-300" />
+    </a>
+
+    <!-- Home Icon -->
+    <a href="index.html" title="Home">
+  <img src="https://img.icons8.com/ios-filled/100/home.png" alt="Home"
+    class="w-6 h-6 sm:w-7 sm:h-7 hover:scale-110 transition-transform duration-300" />
+</a>
+
+  </div>
   </header>
 
   <!-- Main Content -->
   <main class="max-w-5xl mx-auto px-4 py-10 sm:px-2 sm:py-6">
     <!-- Cart Section -->
     <div class="cart-wrapper p-6 shadow-lg mb-8">
-      <h2 class="text-3xl font-bold mb-6">Your Cart</h2>
       <div id="cart-container" class="space-y-8"></div>
 
       <!-- Total + Checkout -->
@@ -256,5 +267,9 @@ total += itemTotal;
   renderWishlist();
 </script>
 
+<div class="h-10"></div>
+
 </body>
+
+
 </html>
