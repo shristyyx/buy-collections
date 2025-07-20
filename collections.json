@@ -21,7 +21,7 @@
       { "product_id": "304", "image": "images/F003/304.jpeg", "price": 799 },
       { "product_id": "303", "image": "images/F003/303.jpeg", "price": 1499 },
       { "product_id": "301", "image": "images/F003/301.jpeg", "price": 1799 },
-      { "product_id": "305", "image": "images/F003/305.jpeg", "price": 699 }
+      { "product_id": "305", "image": "images/F003/305.jpeg", "price": 799 }
 
 
       
@@ -35,8 +35,8 @@
     "model_image": "images/F004/004.jpeg",
     "products": [
       { "product_id": "401", "image": "images/F004/401.jpeg", "price": 1899 },
-      { "product_id": "405", "image": "images/F004/404.jpeg", "price": 999 },
-      { "product_id": "404", "image": "images/F004/405.jpg", "price": 1799 },
+      { "product_id": "405", "image": "images/F004/404.jpeg", "price": 1299 },
+      { "product_id": "404", "image": "images/F004/405.jpg", "price": 1499 },
       { "product_id": "402", "image": "images/F004/402.jpg", "price": 1299 },
       { "product_id": "403", "image": "images/F004/403.jpeg", "price": 999 }
 
@@ -51,14 +51,14 @@
     "collection_id": "002",
     "model_image": "images/F002/002.jpeg",
     "products": [
-      { "product_id": "204", "image": "images/F002/204.jpeg", "price": 799 },
+      { "product_id": "204", "image": "images/F002/204.jpeg", "price": 899 },
       { "product_id": "201", "image": "images/F002/201.jpg", "price": 599 },
-      { "product_id": "203", "image": "images/F002/202.jpeg", "price": 4999 },
-      { "product_id": "203", "image": "images/F002/203.jpeg", "price": 499 }
+      { "product_id": "203", "image": "images/F002/202.jpeg", "price": 999 },
+      { "product_id": "203", "image": "images/F002/203.jpeg", "price": 2499 }
       
     ],
     "title": "The sky is the limit!",
     "category": "women casual",
-    "off": 20
+    "off": 10
   }
 ]
