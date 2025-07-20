@@ -1,33 +1,64 @@
 [
   {
     "collection_id": "001",
-    "model_image": "images/F101.jpg",
+    "model_image": "images/F001/001.png",
     "products": [
-      { "product_id": "101", "image": "images/F102.jpg", "price": 1499 },
-      { "product_id": "102", "image": "images/F103.jpg", "price": 1799 },
-      { "product_id": "103", "image": "images/F107.jpg", "price": 999 },
-      { "product_id": "104", "image": "images/F106.jpg", "price": 1299 },
-      { "product_id": "105", "image": "images/F104.jpg", "price": 499 },
-      { "product_id": "106", "image": "images/F105.jpg", "price": 499 }
+      { "product_id": "101", "image": "images/F001/101.jpg", "price": 1299 },
+      { "product_id": "102", "image": "images/F001/102.jpg", "price": 1299 },
+      { "product_id": "103", "image": "images/F001/103.jpg", "price": 1499 },
+      { "product_id": "105", "image": "images/F001/105.jpg", "price": 399 }
       
     ],
-    "title": "Casual Outfit - Women",
+    "title": "Walk like you own the world!",
     "category": "women casual",
     "off": 20
   },
   {
-    "collection_id": "002",
-    "model_image": "images/M101.jpg",
+    "collection_id": "003",
+    "model_image": "images/F003/003.jpeg",
     "products": [
-      { "product_id": "201", "image": "images/M102.jpg", "price": 1499 },
-      { "product_id": "202", "image": "images/M103.jpg", "price": 1799 },
-      { "product_id": "203", "image": "images/M104.jpg", "price": 499 },
-      { "product_id": "204", "image": "images/M105.jpg", "price": 2199 }
+      { "product_id": "302", "image": "images/F003/302.jpeg", "price": 999 },
+      { "product_id": "304", "image": "images/F003/304.jpeg", "price": 799 },
+      { "product_id": "303", "image": "images/F003/303.jpeg", "price": 1499 },
+      { "product_id": "301", "image": "images/F003/301.jpeg", "price": 1799 },
+      { "product_id": "305", "image": "images/F003/305.jpeg", "price": 699 }
+
 
       
     ],
-    "title": "Casual Outfit - Men",
-    "category": "men casual",
+    "title": "Wear it with confidence!",
+    "category": "women casual",
+    "off": 20
+  },
+  {
+    "collection_id": "004",
+    "model_image": "images/F004/004.jpeg",
+    "products": [
+      { "product_id": "401", "image": "images/F004/401.jpeg", "price": 1899 },
+      { "product_id": "405", "image": "images/F004/404.jpeg", "price": 999 },
+      { "product_id": "404", "image": "images/F004/405.jpg", "price": 1799 },
+      { "product_id": "402", "image": "images/F004/402.jpg", "price": 1299 },
+      { "product_id": "403", "image": "images/F004/403.jpeg", "price": 999 }
+
+
+      
+    ],
+    "title": "You own all of it!",
+    "category": "women casual",
+    "off": 20
+  },
+    {
+    "collection_id": "002",
+    "model_image": "images/F002/002.jpeg",
+    "products": [
+      { "product_id": "204", "image": "images/F002/204.jpeg", "price": 799 },
+      { "product_id": "201", "image": "images/F002/201.jpg", "price": 599 },
+      { "product_id": "203", "image": "images/F002/202.jpeg", "price": 4999 },
+      { "product_id": "203", "image": "images/F002/203.jpeg", "price": 499 }
+      
+    ],
+    "title": "The sky is the limit!",
+    "category": "women casual",
     "off": 20
   }
 ]
