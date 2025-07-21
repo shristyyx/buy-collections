@@ -154,13 +154,13 @@
   <div class="flex items-center gap-4">
     <!-- Outfit Ideas Icon -->
     <a href="outfit-ideas.html" title="Outfit Ideas">
-      <img src="https://img.icons8.com/ios-filled/100/hanger.png" alt="Outfit Ideas"
+      <img src="https://img.icons8.com/ios-filled/100/hanger.png " loading="lazy" alt="Outfit Ideas"
         class="w-8 h-8 sm:w-9 sm:h-9 hover:scale-110 transition-transform duration-300" />
     </a>
 
     <!-- Cart Icon -->
     <button id="cart-button" onclick="location.href='cart.html'" class="relative">
-      <img src="https://img.icons8.com/ios-filled/100/shopping-cart.png"
+      <img src="https://img.icons8.com/ios-filled/100/shopping-cart.png" loading="lazy"
         class="w-9 h-9 sm:w-10 sm:h-10" alt="Cart" />
       <span id="cart-count"
         class="absolute -top-1 -right-1 bg-pink-600 text-white text-[10px] font-semibold rounded-full w-4 h-4 flex items-center justify-center shadow-md">
@@ -226,7 +226,7 @@
 <div class="flex flex-col gap-2 overflow-y-auto h-[340px] pr-1 scroll-smooth flex-shrink-0">
   ${allImages.map((img, index) => `
     <div class="w-20 h-20 flex-shrink-0 border rounded overflow-hidden">
-      <img src="${img}" onclick="setActiveImage('${img}', this)"
+      <img src="${img}" onclick="setActiveImage('${img}', this)" loading="lazy"
            class="w-full h-full object-cover cursor-pointer rounded border ${index === 0 ? 'thumb-selected' : ''}" />
     </div>
   `).join('')}
@@ -238,7 +238,7 @@
 
   <!-- 🖼️ Main Image -->
   <div class="w-[400px] h-[400px] border rounded overflow-hidden flex items-center justify-center">
-    <img id="mainImage" src="${data.model_image}" class="w-full h-full object-cover zoom-image" />
+    <img id="mainImage" src="${data.model_image}" loading="lazy" class="w-full h-full object-cover zoom-image" />
   </div>
 </div>
 
@@ -249,7 +249,7 @@
       <!-- ✅ Mobile View -->
       <div class="flex sm:hidden flex-col gap-2 w-full items-center">
         <div class="w-[300px] h-[300px] border rounded overflow-hidden flex items-center justify-center">
-          <img id="mainImage" src="${data.model_image}" style="width:300px; height:300px;" class="object-cover zoom-image" />
+          <img id="mainImage" src="${data.model_image}" style="width:300px; height:300px;"  loading="lazy" class="object-cover zoom-image" />
         </div>
 
         <!-- Scrollable Horizontal Thumbnails -->
@@ -257,7 +257,7 @@
           <div class="flex gap-2 w-max px-2">
             ${allImages.map((img, index) => `
               <div class="w-20 h-20 flex-shrink-0 border rounded overflow-hidden">
-                <img src="${img}" onclick="setActiveImage('${img}', this)"
+                <img src="${img}" onclick="setActiveImage('${img}', this)" loading="lazy"
                      class="w-full h-full object-cover cursor-pointer rounded border ${index === 0 ? 'thumb-selected' : ''}" />
               </div>
             `).join('')}
@@ -291,7 +291,7 @@
         <div class="space-y-2 mb-6 overflow-y-auto pr-1" id="productList" style="max-height: 18rem;">
           ${data.products.map((img, i) => `
             <div class="flex items-center gap-3 p-2 border rounded" id="product-${i}">
-              <img src="${data.products[i].image}" class="w-14 h-14 object-cover rounded" />
+              <img src="${data.products[i].image}" loading="lazy" class="w-14 h-14 object-cover rounded" />
               <div class="flex-1">
                 <p class="text-sm font-medium">Product ${i + 1}</p>
                 <p class="text-xs text-gray-600">Price: ₹${data.products[i].price}</p>
@@ -422,7 +422,7 @@ function restoreProduct(index) {
       document.getElementById("related-products").classList.remove("hidden");
       document.getElementById("related-list").innerHTML = trimmed.map(item => `
         <div class="break-inside-avoid bg-white rounded-xl shadow hover:shadow-md transition overflow-hidden w-[220px]">
-          <img src="${item.model_image}" class="w-full h-[200px] object-cover rounded-t-xl" />
+          <img src="${item.model_image}" loading="lazy" class="w-full h-[200px] object-cover rounded-t-xl" />
           <div class="p-3">
             <p class="text-sm font-semibold text-gray-800 truncate">${item.title}</p>
             <p class="text-xs text-gray-500">Category: ${item.category}</p>
@@ -501,7 +501,7 @@ function updateTotalPrice() {
     const isRemoved = removedIndexes.has(i);
     return `
       <div class="flex items-center gap-3 p-2 border rounded ${isRemoved ? 'removed' : ''}" id="product-${i}">
-        <img src="${p.image}" class="w-14 h-14 object-cover rounded" />
+        <img src="${p.image}" loading="lazy" class="w-14 h-14 object-cover rounded" />
         <div class="flex-1">
           <p class="text-sm font-medium">Product ${i + 1}</p>
           <p class="text-xs text-gray-600">

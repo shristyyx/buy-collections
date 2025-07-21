@@ -44,13 +44,13 @@
   <div class="flex items-center gap-4">
     <!-- Outfit Ideas Icon -->
     <a href="outfit-ideas.html" title="Outfit Ideas">
-      <img src="https://img.icons8.com/ios-filled/100/hanger.png" alt="Outfit Ideas"
+      <img src="https://img.icons8.com/ios-filled/100/hanger.png" loading="lazy" alt="Outfit Ideas"
         class="w-8 h-8 sm:w-9 sm:h-9 hover:scale-110 transition-transform duration-300" />
     </a>
 
     <!-- Cart Icon -->
     <button id="cart-button" onclick="location.href='cart.html'" class="relative">
-      <img src="https://img.icons8.com/ios-filled/100/shopping-cart.png"
+      <img src="https://img.icons8.com/ios-filled/100/shopping-cart.png " loading="lazy"
         class="w-9 h-9 sm:w-10 sm:h-10" alt="Cart" />
       <span id="cart-count"
         class="absolute -top-1 -right-1 bg-pink-600 text-white text-[10px] font-semibold rounded-full w-4 h-4 flex items-center justify-center shadow-md">
@@ -107,14 +107,14 @@ card.innerHTML = `
   <div class="grid grid-cols-2 flex-1">
     <!-- Fixed-size Model Image -->
     <div class="w-full h-full overflow-hidden">
-      <img src="${item.model_image}" class="w-full h-full object-cover object-top" />
+      <img src="${item.model_image}" class="w-full h-full object-cover object-top" loading="lazy"/>
     </div>
 
     <!-- Product Images Grid -->
     <div class="grid grid-rows-2 grid-cols-2 gap-1 p-1 w-full h-full">
       ${item.products.slice(0, 4).map(p => `
         <div class="w-full h-full rounded overflow-hidden border relative">
-          <img src="${p.image}" class="w-full h-full object-cover object-center" />
+          <img src="${p.image}" class="w-full h-full object-cover object-center" loading="lazy"/>
         </div>
       `).join('')}
     </div>
