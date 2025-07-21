@@ -1,9 +1,9 @@
 [
   {
     "collection_id": "001",
-    "model_image": "images/F001/001.png",
+    "model_image": "images/F001/001.jpeg",
     "products": [
-      { "product_id": "101", "image": "images/F001/101.jpeg", "price": 1299 },
+      { "product_id": "101", "image": "images/F001/101.jpg", "price": 1299 },
       { "product_id": "102", "image": "images/F001/102.jpg", "price": 1299 },
       { "product_id": "103", "image": "images/F001/103.jpg", "price": 1499 },
       { "product_id": "105", "image": "images/F001/105.jpg", "price": 399 }
