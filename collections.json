@@ -15,12 +15,12 @@
   },
       {
     "collection_id": "002",
-    "model_image": "images/F002/002.jpeg",
+    "model_image": "https://ik.imagekit.io/shristyyx/F002/002.jpeg?updatedAt=1753077328749",
     "products": [
-      { "product_id": "204", "image": "images/F002/204.jpeg", "price": 899 },
-      { "product_id": "201", "image": "images/F002/201.jpg", "price": 599 },
-      { "product_id": "202", "image": "images/F002/202.jpeg", "price": 999 },
-      { "product_id": "203", "image": "images/F002/203.jpeg", "price": 2499 }
+      { "product_id": "204", "image": "https://ik.imagekit.io/shristyyx/F002/204.jpeg?updatedAt=1753077328662", "price": 899 },
+      { "product_id": "201", "image": "https://ik.imagekit.io/shristyyx/F002/202.jpeg?updatedAt=1753077329132", "price": 599 },
+      { "product_id": "202", "image": "https://ik.imagekit.io/shristyyx/F002/201.jpg?updatedAt=1753077329040", "price": 999 },
+      { "product_id": "203", "image": "https://ik.imagekit.io/shristyyx/F002/203.jpeg?updatedAt=1753077327145", "price": 2499 }
       
     ],
     "title": "The sky is the limit!",
@@ -29,13 +29,13 @@
   },
   {
     "collection_id": "003",
-    "model_image": "images/F003/003.jpeg",
+    "model_image": "https://ik.imagekit.io/shristyyx/F003/003.jpeg?updatedAt=1753077335795",
     "products": [
-      { "product_id": "302", "image": "images/F003/302.jpeg", "price": 999 },
-      { "product_id": "304", "image": "images/F003/304.jpeg", "price": 799 },
-      { "product_id": "303", "image": "images/F003/303.jpeg", "price": 1499 },
-      { "product_id": "301", "image": "images/F003/301.jpeg", "price": 1799 },
-      { "product_id": "305", "image": "images/F003/305.jpeg", "price": 799 }
+      { "product_id": "302", "image": "https://ik.imagekit.io/shristyyx/F003/302.jpeg?updatedAt=1753077335086", "price": 999 },
+      { "product_id": "304", "image": "https://ik.imagekit.io/shristyyx/F003/304.jpeg?updatedAt=1753077335801", "price": 799 },
+      { "product_id": "303", "image": "https://ik.imagekit.io/shristyyx/F003/303.jpeg?updatedAt=1753077335058", "price": 1499 },
+      { "product_id": "301", "image": "https://ik.imagekit.io/shristyyx/F003/301.jpeg?updatedAt=1753077335792", "price": 1799 },
+      { "product_id": "305", "image": "https://ik.imagekit.io/shristyyx/F003/305.jpeg?updatedAt=1753077335139", "price": 799 }
 
 
       
@@ -46,16 +46,13 @@
   },
   {
     "collection_id": "004",
-    "model_image": "images/F004/004.jpeg",
+    "model_image": "https://ik.imagekit.io/shristyyx/F004/004.jpeg?updatedAt=1753077341245",
     "products": [
-      { "product_id": "401", "image": "images/F004/401.jpeg", "price": 1899 },
-      { "product_id": "405", "image": "images/F004/404.jpeg", "price": 1299 },
-      { "product_id": "404", "image": "images/F004/405.jpg", "price": 1499 },
-      { "product_id": "402", "image": "images/F004/402.jpeg", "price": 1299 },
-      { "product_id": "403", "image": "images/F004/403.jpeg", "price": 999 }
-
-
-      
+      { "product_id": "401", "image": "https://ik.imagekit.io/shristyyx/F004/401.jpeg?updatedAt=1753077335286", "price": 1899 },
+      { "product_id": "405", "image": "https://ik.imagekit.io/shristyyx/F004/404.jpeg?updatedAt=1753077341619", "price": 1299 },
+      { "product_id": "404", "image": "https://ik.imagekit.io/shristyyx/F004/405.jpg?updatedAt=1753077335342", "price": 1499 },
+      { "product_id": "402", "image": "https://ik.imagekit.io/shristyyx/F004/402.jpeg?updatedAt=1753077335214", "price": 1299 },
+      { "product_id": "403", "image": "https://ik.imagekit.io/shristyyx/F004/403.jpeg?updatedAt=1753077335278", "price": 999 }
     ],
     "title": "You own all of it!",
     "category": "women casual",
