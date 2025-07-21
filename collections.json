@@ -1,12 +1,12 @@
 [
   {
     "collection_id": "001",
-    "model_image": "images/F001/001.jpeg",
+    "model_image": "https://ik.imagekit.io/shristyyx/F001/001.jpeg?updatedAt=1753077329334",
     "products": [
-      { "product_id": "101", "image": "images/F001/101.jpg", "price": 1299 },
-      { "product_id": "102", "image": "images/F001/102.jpg", "price": 1299 },
-      { "product_id": "103", "image": "images/F001/103.jpg", "price": 1499 },
-      { "product_id": "105", "image": "images/F001/105.jpg", "price": 399 }
+      { "product_id": "101", "image": "https://ik.imagekit.io/shristyyx/F001/101.jpg?updatedAt=1753077328986", "price": 1299 },
+      { "product_id": "102", "image": "https://ik.imagekit.io/shristyyx/F001/102.jpg?updatedAt=1753077328871", "price": 1299 },
+      { "product_id": "103", "image": "https://ik.imagekit.io/shristyyx/F001/103.jpg?updatedAt=1753077328378", "price": 1499 },
+      { "product_id": "105", "image": "https://ik.imagekit.io/shristyyx/F001/105.jpg?updatedAt=1753077329043", "price": 399 }
       
     ],
     "title": "Walk like you own the world!",
