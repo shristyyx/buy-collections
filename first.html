@@ -106,7 +106,6 @@
 <footer class="text-center py-6 border-t mt-10">
   <p>&copy; 2025 COLLECTION. All rights reserved.</p>
 </footer>
-
 <script>
   document.addEventListener('DOMContentLoaded', async () => {
     const response = await fetch('collections.json');
@@ -114,51 +113,45 @@
 
     const womenContainer = document.getElementById('collections-women');
     const menContainer = document.getElementById('collections-men');
-    let isWomenActive = true;
-
     const womenBtn = document.getElementById('show-women');
-const menBtn = document.getElementById('show-men');
+    const menBtn = document.getElementById('show-men');
 
-function updateToggleButtons() {
-  if (isWomenActive) {
-    womenBtn.classList.add('hidden');
-    menBtn.classList.remove('hidden');
-  } else {
-    womenBtn.classList.remove('hidden');
-    menBtn.classList.add('hidden');
-  }
-}
+    let isWomenActive = true;
+    let currentFiltered = [];
 
-womenBtn.addEventListener('click', () => {
-  isWomenActive = true;
-  renderCollections('women');
-  updateToggleButtons();
-});
+    function updateToggleButtons() {
+      if (isWomenActive) {
+        womenBtn.classList.add('hidden');
+        menBtn.classList.remove('hidden');
+      } else {
+        womenBtn.classList.remove('hidden');
+        menBtn.classList.add('hidden');
+      }
+    }
 
-menBtn.addEventListener('click', () => {
-  isWomenActive = false;
-  renderCollections('men');
-  updateToggleButtons();
-});
+    womenBtn.addEventListener('click', () => {
+      isWomenActive = true;
+      renderCollections('women');
+      updateToggleButtons();
+    });
 
-// Initial setup
-renderCollections('women');
-updateToggleButtons();
-
+    menBtn.addEventListener('click', () => {
+      isWomenActive = false;
+      renderCollections('men');
+      updateToggleButtons();
+    });
 
     function renderCollections(gender) {
-      // Clear both containers
       womenContainer.innerHTML = '';
       menContainer.innerHTML = '';
 
-      const filtered = data.filter(item => {
-  if (!item.category) return false;
-  const words = item.category.toLowerCase().trim().split(/\s+/);
-  return words.includes(gender.toLowerCase());
-});
+      currentFiltered = data.filter(item => {
+        if (!item.category) return false;
+        const words = item.category.toLowerCase().trim().split(/\s+/);
+        return words.includes(gender.toLowerCase());
+      });
 
-
-      filtered.forEach((item, i) => {
+      currentFiltered.forEach((item, i) => {
         const totalOriginal = item.products.reduce((sum, p) => sum + p.price, 0);
         const discount = item.off || 0;
         const discountedPrice = Math.round(totalOriginal * (1 - discount / 100));
@@ -191,12 +184,11 @@ updateToggleButtons();
               <span class="font-semibold text-sm text-pink-600">₹${discountedPrice}</span>
               <span class="text-green-600 text-xs">(${discount}% OFF)</span>
             </div>
-            <button class="shop-btn mt-2 w-full bg-black text-white py-1 sm:py-2 rounded text-xs sm:text-sm" data-index="${i}" data-gender="${gender}">
+            <button class="shop-btn mt-2 w-full bg-black text-white py-1 sm:py-2 rounded text-xs sm:text-sm" data-index="${i}">
               Shop Collection
             </button>
           </div>
         `;
-
 
         if (gender === 'women') {
           womenContainer.appendChild(card);
@@ -210,31 +202,29 @@ updateToggleButtons();
       });
     }
 
-    // Initial render
-    renderCollections('women');
-
-
+    // Single working event listener for all Shop buttons
     document.addEventListener('click', (e) => {
       if (e.target.classList.contains('shop-btn')) {
         const index = parseInt(e.target.getAttribute('data-index'));
-        const gender = e.target.getAttribute('data-gender');
-        const filtered = data.filter(item =>
-item.category.trim().toLowerCase() === gender
-        );
-        const selected = filtered[index];
+        const selected = currentFiltered[index];
+        if (!selected) return;
         localStorage.setItem('selectedCollection', JSON.stringify(selected));
         window.location.href = 'product.html';
       }
     });
 
+    // Initial load
+    renderCollections('women');
+    updateToggleButtons();
     updateCartCount();
-  });
 
-  function updateCartCount() {
-    const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-    document.getElementById('cart-count').textContent = cartItems.length;
-  }
+    function updateCartCount() {
+      const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+      document.getElementById('cart-count').textContent = cartItems.length;
+    }
+  });
 </script>
+
 
 <div class="h-10"></div>
 </body>
