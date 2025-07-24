@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Closette Studios</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel&display=swap" rel="stylesheet">
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    .collection-card:hover {
+      background-image: url('https://www.transparenttextures.com/patterns/gplay.png');
+      background-color: #fff0f3;
+      background-blend-mode: overlay;
+    }
+    .highlight-banner {
+      transition: all 0.6s ease-in-out;
+      border-radius: 80px;
+      background: url('blob.svg') no-repeat center/cover, rgb(68, 29, 35);
+      position: relative;
+      overflow: hidden;
+    }
+    .highlight-banner:hover {
+      transform: scale(1.02);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    }
+    .group:hover .dream-world {
+      max-height: 1200px;
+      opacity: 1;
+      transform: scale(1);
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-800 font-sans"><section class="relative w-full overflow-hidden">
+  <!-- Closette Image Full Width -->
+  <img
+    src="images/closette.png"
+    alt="Closette Studios Hero"
+    class="w-full object-cover sm:h-screen sm:object-center object-top"
+  />
+
+  <!-- Navbar Overlaid on Top -->
+  <header class="absolute top-0 left-0 w-full flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 z-10">
+    <!-- Left: Logo -->
+    <a href="#welcome">
+      <img src="images/logo.png" alt="Closette Studios Logo" class="h-10 sm:h-12 object-contain" />
+    </a>
+
+    <!-- Right: Icons -->
+    <div class="flex items-center gap-4">
+      <!-- Outfit Ideas -->
+      <a href="outfit-ideas.html" title="Outfit Ideas">
+        <img src="https://img.icons8.com/ios-filled/100/hanger.png" alt="Outfit Ideas"
+          class="w-8 h-8 sm:w-9 sm:h-9 hover:scale-110 transition-transform duration-300" />
+      </a>
+
+      <!-- Cart Icon -->
+      <button id="cart-button" onclick="location.href='cart.html'" class="relative">
+        <img src="https://img.icons8.com/ios-filled/100/shopping-cart.png" alt="Cart"
+          class="w-9 h-9 sm:w-10 sm:h-10" />
+        <span id="cart-count"
+          class="absolute -top-1 -right-1 bg-pink-600 text-white text-[10px] font-semibold rounded-full w-4 h-4 flex items-center justify-center shadow-md">
+          0
+        </span>
+      </button>
+    </div>
+  </header>
+</section>
+
+<!-- Page Title + Filter Buttons -->
+<section class="p-4 sm:p-6 text-center pb-8">
+  <h2 class="text-lg sm:text-3xl font-bold mb-3 sm:mb-4">Shop Curated Collections</h2>
+ <!-- Gender Switch Button -->
+<!-- Gender Switch Buttons -->
+<div class="absolute top-[60%] w-full z-20 pointer-events-none">
+  <!-- Women Button (visible when viewing Men) -->
+  <button id="show-women" class="absolute left-0 bg-black text-white text-xs sm:text-sm px-4 py-2 rounded-r-full shadow-md transition-all duration-500 pointer-events-auto hidden">
+    ← Women
+  </button>
+  <!-- Men Button (visible when viewing Women) -->
+  <button id="show-men" class="absolute right-0 bg-black text-white text-xs sm:text-sm px-4 py-2 rounded-l-full shadow-md transition-all duration-500 pointer-events-auto">
+    Men →
+  </button>
+</div>
+
+
+
+</section>
+
+<!-- Product Grid -->
+<section class="relative overflow-hidden h-full">
+  <div id="collections-wrapper" class="flex transition-transform duration-700 ease-in-out w-[200%]">
+    <!-- Women Container -->
+    <section id="collections-women" class="p-4 sm:p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 w-full"></section>
+    
+    <!-- Men Container -->
+    <section id="collections-men" class="p-4 sm:p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 w-full"></section>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="text-center py-6 border-t mt-10">
+  <p>&copy; 2025 COLLECTION. All rights reserved.</p>
+</footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    const response = await fetch('collections.json');
+    const data = await response.json();
+
+    const womenContainer = document.getElementById('collections-women');
+    const menContainer = document.getElementById('collections-men');
+    let isWomenActive = true;
+
+    const womenBtn = document.getElementById('show-women');
+const menBtn = document.getElementById('show-men');
+
+function updateToggleButtons() {
+  if (isWomenActive) {
+    womenBtn.classList.add('hidden');
+    menBtn.classList.remove('hidden');
+  } else {
+    womenBtn.classList.remove('hidden');
+    menBtn.classList.add('hidden');
+  }
+}
+
+womenBtn.addEventListener('click', () => {
+  isWomenActive = true;
+  renderCollections('women');
+  updateToggleButtons();
+});
+
+menBtn.addEventListener('click', () => {
+  isWomenActive = false;
+  renderCollections('men');
+  updateToggleButtons();
+});
+
+// Initial setup
+renderCollections('women');
+updateToggleButtons();
+
+
+    function renderCollections(gender) {
+      // Clear both containers
+      womenContainer.innerHTML = '';
+      menContainer.innerHTML = '';
+
+      const filtered = data.filter(item => {
+  if (!item.category) return false;
+  const words = item.category.toLowerCase().trim().split(/\s+/);
+  return words.includes(gender.toLowerCase());
+});
+
+
+      filtered.forEach((item, i) => {
+        const totalOriginal = item.products.reduce((sum, p) => sum + p.price, 0);
+        const discount = item.off || 0;
+        const discountedPrice = Math.round(totalOriginal * (1 - discount / 100));
+
+        const card = document.createElement('div');
+        card.className = `
+          collection-card border rounded-xl shadow 
+          transition-all duration-500 transform
+          hover:scale-[1.04] hover:shadow-[0_20px_40px_rgba(0,0,0,0.2)] 
+          hover:-translate-y-1 hover:border-pink-300
+          w-full max-w-md h-[360px] flex flex-col overflow-hidden
+        `;
+        card.innerHTML = `
+          <div class="grid grid-cols-2 flex-1">
+            <div class="w-full h-full overflow-hidden">
+              <img src="${item.model_image}" class="w-full h-full object-cover object-top" loading="lazy"/>
+            </div>
+            <div class="grid grid-rows-2 grid-cols-2 gap-1 p-1 w-full h-full">
+              ${item.products.slice(0, 4).map(p => `
+                <div class="w-full h-full rounded overflow-hidden border relative">
+                  <img src="${p.image}" class="w-full h-full object-cover object-center" loading="lazy"/>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+          <div class="flex flex-col items-center justify-center text-center px-2 py-3 text-sm sm:text-base">
+            <p class="text-gray-700 text-xs sm:text-sm mt-1">${item.title}</p>
+            <div class="flex items-center gap-2">
+              <span class="text-gray-400 line-through text-xs">₹${totalOriginal}</span>
+              <span class="font-semibold text-sm text-pink-600">₹${discountedPrice}</span>
+              <span class="text-green-600 text-xs">(${discount}% OFF)</span>
+            </div>
+            <button class="shop-btn mt-2 w-full bg-black text-white py-1 sm:py-2 rounded text-xs sm:text-sm" data-index="${i}" data-gender="${gender}">
+              Shop Collection
+            </button>
+          </div>
+        `;
+
+
+        if (gender === 'women') {
+          womenContainer.appendChild(card);
+          womenContainer.style.display = 'grid';
+          menContainer.style.display = 'none';
+        } else {
+          menContainer.appendChild(card);
+          menContainer.style.display = 'grid';
+          womenContainer.style.display = 'none';
+        }
+      });
+    }
+
+    // Initial render
+    renderCollections('women');
+
+
+    document.addEventListener('click', (e) => {
+      if (e.target.classList.contains('shop-btn')) {
+        const index = parseInt(e.target.getAttribute('data-index'));
+        const gender = e.target.getAttribute('data-gender');
+        const filtered = data.filter(item =>
+item.category.trim().toLowerCase() === gender
+        );
+        const selected = filtered[index];
+        localStorage.setItem('selectedCollection', JSON.stringify(selected));
+        window.location.href = 'product.html';
+      }
+    });
+
+    updateCartCount();
+  });
+
+  function updateCartCount() {
+    const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    document.getElementById('cart-count').textContent = cartItems.length;
+  }
+</script>
+
+<div class="h-10"></div>
+</body>
+</html>

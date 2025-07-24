@@ -3,182 +3,63 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Collection Store</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel&display=swap" rel="stylesheet">
+  <title>Closette Studios</title>
+
+  <!-- Satoshi Font -->
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
-    .collection-card:hover {
-      background-image: url('https://www.transparenttextures.com/patterns/gplay.png');
-      background-color: #fff0f3;
-      background-blend-mode: overlay;
+    body {
+      font-family: 'Satoshi', sans-serif;
+      background-color: #ffffff;
+      color: #111111;
     }
 
-    .highlight-banner {
-      transition: all 0.6s ease-in-out;
-      border-radius: 80px;
-      background: url('blob.svg') no-repeat center/cover, rgb(68, 29, 35);
-      position: relative;
-      overflow: hidden;
-    }
-    .highlight-banner:hover {
-      transform: scale(1.02);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
     }
 
-    .group:hover .dream-world {
-      max-height: 1200px;
+    .fade-in.visible {
       opacity: 1;
-      transform: scale(1);
+      transform: translateY(0);
     }
   </style>
 </head>
-<body class="bg-white text-gray-800 font-sans">
-  <!-- Navbar -->
-<header class="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 border-b">
-  <!-- Left: Logo/Title -->
-  <a href="index.html" class="text-xl sm:text-2xl font-bold">CLOSETTE STUDIOS</a>
+<body class="min-h-screen flex flex-col items-center justify-center px-6 py-12">
 
-  <!-- Right: Icons -->
-  <div class="flex items-center gap-4">
-    <!-- Outfit Ideas Icon -->
-    <a href="outfit-ideas.html" title="Outfit Ideas">
-      <img src="https://img.icons8.com/ios-filled/100/hanger.png" loading="lazy" alt="Outfit Ideas"
-        class="w-8 h-8 sm:w-9 sm:h-9 hover:scale-110 transition-transform duration-300" />
-    </a>
+  <!-- Launch Hero Section -->
+  <section id="hero" class="w-full max-w-3xl text-center fade-in">
+    <h1 class="text-3xl sm:text-4xl md:text-5xl font-medium mb-4">
+      Time to turn your closet into <em class="italic font-light tracking-wide">Closette</em> ✨
+    </h1>
 
-    <!-- Cart Icon -->
-    <button id="cart-button" onclick="location.href='cart.html'" class="relative">
-      <img src="https://img.icons8.com/ios-filled/100/shopping-cart.png " loading="lazy"
-        class="w-9 h-9 sm:w-10 sm:h-10" alt="Cart" />
-      <span id="cart-count"
-        class="absolute -top-1 -right-1 bg-pink-600 text-white text-[10px] font-semibold rounded-full w-4 h-4 flex items-center justify-center shadow-md">
-        0
-      </span>
+    <button
+      onclick="window.location.href='first.html'"
+      class="mt-6 px-6 py-3 border border-black text-black hover:bg-black hover:text-white transition-all duration-300 rounded-full text-sm sm:text-base tracking-wide"
+    >
+      LESSGOO
     </button>
-  </div>
-</header>
-
-
-  <!-- Page Title + Filter Buttons -->
-  <section class="p-4 sm:p-6 text-center">
-    <h2 class="text-lg sm:text-3xl font-bold mb-3 sm:mb-4">Shop Curated Collections</h2>
-    <div class="flex justify-center flex-wrap gap-2 sm:gap-3 text-xs sm:text-sm">
-      <button data-filter="all" class="px-3 sm:px-4 py-1 sm:py-2 bg-black text-white rounded-full">All</button>
-      <button data-filter="men" class="px-3 sm:px-4 py-1 sm:py-2 bg-gray-200 rounded-full">Men</button>
-      <button data-filter="women" class="px-3 sm:px-4 py-1 sm:py-2 bg-gray-200 rounded-full">Women</button>
-    </div>
   </section>
 
-  <!-- Product Grid -->
-  <section id="collections-container" class="p-4 sm:p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"></section>
-
-  <!-- Footer -->
-  <footer class="text-center py-6 border-t mt-10">
-    <p>&copy; 2025 COLLECTION. All rights reserved.</p>
-  </footer>
-
-  <!-- Script -->
+  <!-- Optional JS for animation trigger -->
   <script>
-    document.addEventListener('DOMContentLoaded', async () => {
-      const response = await fetch('collections.json');
-      const data = await response.json();
-      const container = document.getElementById('collections-container');
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
 
-      data.forEach((item, index) => {
-        const totalPrice = item.products.reduce((sum, p) => sum + (p.price || 0), 0);
-
-        const card = document.createElement('div');
-        card.className = `
-  collection-card border rounded-xl shadow 
-  transition-all duration-500 transform
-  hover:scale-[1.04] hover:shadow-[0_20px_40px_rgba(0,0,0,0.2)] 
-  hover:-translate-y-1 hover:border-pink-300
-  w-full max-w-md h-[360px] flex flex-col overflow-hidden
-`;
-
-        card.setAttribute('data-category', item.category);
-
-       const totalOriginal = item.products.reduce((sum, p) => sum + p.price, 0);
-const discount = item.off || 0;
-const discountedPrice = Math.round(totalOriginal * (1 - discount / 100));
-card.innerHTML = `
-  <div class="grid grid-cols-2 flex-1">
-    <!-- Fixed-size Model Image -->
-    <div class="w-full h-full overflow-hidden">
-      <img src="${item.model_image}" class="w-full h-full object-cover object-top" loading="lazy"/>
-    </div>
-
-    <!-- Product Images Grid -->
-    <div class="grid grid-rows-2 grid-cols-2 gap-1 p-1 w-full h-full">
-      ${item.products.slice(0, 4).map(p => `
-        <div class="w-full h-full rounded overflow-hidden border relative">
-          <img src="${p.image}" class="w-full h-full object-cover object-center" loading="lazy"/>
-        </div>
-      `).join('')}
-    </div>
-  </div>
-
-  <!-- Title + Price + Button -->
-  <div class="flex flex-col items-center justify-center text-center px-2 py-3 text-sm sm:text-base">
-    <p class="text-gray-700 text-xs sm:text-sm mt-1">${item.title}</p>
-    <div class="flex items-center gap-2">
-      <span class="text-gray-400 line-through text-xs">₹${totalOriginal}</span>
-      <span class="font-semibold text-sm text-pink-600">₹${discountedPrice}</span>
-      <span class="text-green-600 text-xs">(${discount}% OFF)</span>
-    </div>
-    <button class="shop-btn mt-2 w-full bg-black text-white py-1 sm:py-2 rounded text-xs sm:text-sm" data-index="${index}">
-      Shop Collection
-    </button>
-  </div>
-`;
-
-
-
-        container.appendChild(card);
-      });
-
-      document.addEventListener('click', async (e) => {
-        if (e.target.classList.contains('shop-btn')) {
-          const index = e.target.getAttribute('data-index');
-          const response = await fetch('collections.json');
-          const allCollections = await response.json();
-          const selected = allCollections[index];
-          localStorage.setItem('selectedCollection', JSON.stringify(selected));
-          window.location.href = 'product.html';
-        }
-      });
-
-      const buttons = document.querySelectorAll('[data-filter]');
-buttons.forEach(btn => {
-  btn.addEventListener('click', () => {
-    const filter = btn.getAttribute('data-filter');
-    const cards = document.querySelectorAll('[data-category]');
-    cards.forEach(card => {
-      const category = card.getAttribute('data-category').toLowerCase();
-      const match =
-        filter === 'all' ||
-        category === filter ||
-        category.startsWith(filter + ' ');
-      card.style.display = match ? 'block' : 'none';
-    });
-    buttons.forEach(b => b.classList.remove('bg-black', 'text-white'));
-    btn.classList.add('bg-black', 'text-white');
-  });
-});
-
-    });
-
-    function updateCartCount() {
-    const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-    document.getElementById('cart-count').textContent = cartItems.length;
-  }
-
-  // Call it once on page load
-  updateCartCount();
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
   </script>
-  <div class="h-10"></div>
-
 </body>
 </html>

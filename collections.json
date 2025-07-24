@@ -3,39 +3,25 @@
     "collection_id": "001",
     "model_image": "https://ik.imagekit.io/shristyyx/F001/001.jpeg?updatedAt=1753077329334",
     "products": [
-      { "product_id": "101", "image": "https://ik.imagekit.io/shristyyx/F001/101.jpg?updatedAt=1753077328986", "price": 1299 },
-      { "product_id": "102", "image": "https://ik.imagekit.io/shristyyx/F001/102.jpg?updatedAt=1753077328871", "price": 1299 },
-      { "product_id": "103", "image": "https://ik.imagekit.io/shristyyx/F001/103.jpg?updatedAt=1753077328378", "price": 1499 },
-      { "product_id": "105", "image": "https://ik.imagekit.io/shristyyx/F001/105.jpg?updatedAt=1753077329043", "price": 399 }
+      { "product_id": "101", "name" : "Black Mini Dress", "image": "https://ik.imagekit.io/shristyyx/F001/101.jpg?updatedAt=1753077328986", "price": 780 },
+      { "product_id": "104", "name" : "Red Sling Bag", "image": "https://ik.imagekit.io/shristyyx/F001/102.jpg?updatedAt=1753077328871", "price": 540 },
+      { "product_id": "102", "name" : "Black Lace Boot", "image": "https://ik.imagekit.io/shristyyx/F001/103.jpg?updatedAt=1753077328378", "price": 1499 },
+      { "product_id": "105", "name" : "Silver Hoops", "image": "https://ik.imagekit.io/shristyyx/F001/105.jpg?updatedAt=1753077329043", "price": 399 }
       
     ],
     "title": "Walk like you own the world!",
     "category": "women casual",
     "off": 20
   },
-      {
-    "collection_id": "002",
-    "model_image": "https://ik.imagekit.io/shristyyx/F002/002.jpeg?updatedAt=1753077328749",
-    "products": [
-      { "product_id": "204", "image": "https://ik.imagekit.io/shristyyx/F002/204.jpeg?updatedAt=1753077328662", "price": 899 },
-      { "product_id": "201", "image": "https://ik.imagekit.io/shristyyx/F002/202.jpeg?updatedAt=1753077329132", "price": 599 },
-      { "product_id": "202", "image": "https://ik.imagekit.io/shristyyx/F002/201.jpg?updatedAt=1753077329040", "price": 999 },
-      { "product_id": "203", "image": "https://ik.imagekit.io/shristyyx/F002/203.jpeg?updatedAt=1753077327145", "price": 2499 }
-      
-    ],
-    "title": "The sky is the limit!",
-    "category": "women casual",
-    "off": 10
-  },
-  {
+    {
     "collection_id": "003",
     "model_image": "https://ik.imagekit.io/shristyyx/F003/003.jpeg?updatedAt=1753077335795",
     "products": [
-      { "product_id": "302", "image": "https://ik.imagekit.io/shristyyx/F003/302.jpeg?updatedAt=1753077335086", "price": 999 },
-      { "product_id": "304", "image": "https://ik.imagekit.io/shristyyx/F003/304.jpeg?updatedAt=1753077335801", "price": 799 },
-      { "product_id": "303", "image": "https://ik.imagekit.io/shristyyx/F003/303.jpeg?updatedAt=1753077335058", "price": 1499 },
-      { "product_id": "301", "image": "https://ik.imagekit.io/shristyyx/F003/301.jpeg?updatedAt=1753077335792", "price": 1799 },
-      { "product_id": "305", "image": "https://ik.imagekit.io/shristyyx/F003/305.jpeg?updatedAt=1753077335139", "price": 799 }
+      { "product_id": "201", "name" : "Black Skirt", "image": "https://ik.imagekit.io/shristyyx/F003/302.jpeg?updatedAt=1753077335086", "price": 880 },
+      { "product_id": "202", "name" : "White Tank Top", "image": "https://ik.imagekit.io/shristyyx/F003/304.jpeg?updatedAt=1753077335801", "price": 740 },
+      { "product_id": "205", "name" : "Black Bag", "image": "https://ik.imagekit.io/shristyyx/F003/303.jpeg?updatedAt=1753077335058", "price": 1080 },
+      { "product_id": "204", "name" : "Strappy Heels", "image": "https://ik.imagekit.io/shristyyx/F003/301.jpeg?updatedAt=1753077335792", "price": 1020 },
+      { "product_id": "203", "name" : "Satin Shirt" ,"image": "https://ik.imagekit.io/shristyyx/F003/305.jpeg?updatedAt=1753077335139", "price": 750 }
 
 
       
@@ -44,19 +30,94 @@
     "category": "women casual",
     "off": 20
   },
+      {
+    "collection_id": "002",
+    "model_image": "https://ik.imagekit.io/shristyyx/F002/002.jpeg?updatedAt=1753077328749",
+    "products": [
+      { "product_id": "301", "name" : "Red Top", "image": "https://ik.imagekit.io/shristyyx/F002/204.jpeg?updatedAt=1753077328662", "price": 620 },
+      { "product_id": "302", "name" : "Black Skorts", "image": "https://ik.imagekit.io/shristyyx/F002/202.jpeg?updatedAt=1753077329132", "price": 799 },
+      { "product_id": "304", "name" : "Black Shades", "image": "https://ik.imagekit.io/shristyyx/F002/201.jpg?updatedAt=1753077329040", "price": 800 },
+      { "product_id": "303", "name" : "High Boots", "image": "https://ik.imagekit.io/shristyyx/F002/203.jpeg?updatedAt=1753077327145", "price": 3400 }
+      
+    ],
+    "title": "The sky is the limit!",
+    "category": "women casual",
+    "off": 10
+  },
+
   {
     "collection_id": "004",
     "model_image": "https://ik.imagekit.io/shristyyx/F004/004.jpeg?updatedAt=1753077341245",
     "products": [
-      { "product_id": "401", "image": "https://ik.imagekit.io/shristyyx/F004/401.jpeg?updatedAt=1753077335286", "price": 1899 },
-      { "product_id": "405", "image": "https://ik.imagekit.io/shristyyx/F004/404.jpeg?updatedAt=1753077341619", "price": 1299 },
-      { "product_id": "404", "image": "https://ik.imagekit.io/shristyyx/F004/405.jpg?updatedAt=1753077335342", "price": 1499 },
-      { "product_id": "402", "image": "https://ik.imagekit.io/shristyyx/F004/402.jpeg?updatedAt=1753077335214", "price": 1299 },
-      { "product_id": "403", "image": "https://ik.imagekit.io/shristyyx/F004/403.jpeg?updatedAt=1753077335278", "price": 999 }
+      { "product_id": "404","name" : "Blue Convos", "image": "https://ik.imagekit.io/shristyyx/F004/401.jpeg?updatedAt=1753077335286", "price": 1499 },
+      { "product_id": "401","name" : "Black Faded Jeans", "image": "https://ik.imagekit.io/shristyyx/F004/404.jpeg?updatedAt=1753077341619", "price": 780 },
+      { "product_id": "403","name" : "Black Sling Bag", "image": "https://ik.imagekit.io/shristyyx/F004/405.jpg?updatedAt=1753077335342", "price": 1499 },
+      { "product_id": "402","name" : "Butterfly Crop Top", "image": "https://ik.imagekit.io/shristyyx/F004/402.jpeg?updatedAt=1753077335214", "price": 899 },
+      { "product_id": "405","name" : "Black Shades","image": "https://ik.imagekit.io/shristyyx/F004/403.jpeg?updatedAt=1753077335278", "price": 489 }
     ],
     "title": "You own all of it!",
     "category": "women casual",
-    "off": 20
-  }
+    "off": 10
+  },
 
+  
+  {
+    "collection_id": "005",
+    "model_image": "images/M001/001.jpeg",
+    "products": [
+      { "product_id": "501", "image": "images/M001/101.jpeg", "price": 1405 },
+      { "product_id": "502", "image": "images/M001/102.jpeg", "price": 900 },
+      { "product_id": "503", "image": "images/M001/103.jpeg", "price": 1999 },
+      { "product_id": "504", "image": "images/M001/104.jpeg", "price": 399 }
+      
+    ],
+    "title": "Get the look!",
+    "category": "men casual",
+    "off": 15
+  },
+
+   {
+    "collection_id": "006",
+    "model_image": "images/M002/002.jpeg",
+    "products": [
+      { "product_id": "601", "image": "images/M002/201.jpeg", "price": 2099 },
+      { "product_id": "602", "image": "images/M002/202.jpeg", "price": 599 },
+      { "product_id": "603", "image": "images/M002/203.jpeg", "price": 1299 },
+      { "product_id": "604", "image": "images/M002/304.jpeg", "price": 1499 }
+      
+    ],
+    "title": "Walk like you own the world",
+    "category": "men casual",
+    "off": 20
+  },
+   {
+    "collection_id": "006",
+    "model_image": "images/M003/003.jpeg",
+    "products": [
+      { "product_id": "601", "image": "images/M003/301.jpeg", "price": 2500 },
+      { "product_id": "602", "image": "images/M003/302.jpeg", "price": 1500 },
+      { "product_id": "603", "image": "images/M003/303.jpeg", "price": 1500 },
+      { "product_id": "605", "image": "images/M003/305.jpeg", "price": 2500 },
+      { "product_id": "604", "image": "images/M003/304.jpeg", "price": 1699 }
+      
+    ],
+    "title": "They're always looking!",
+    "category": "men casual",
+    "off": 10
+  },
+   {
+    "collection_id": "006",
+    "model_image": "images/M004/004.jpeg",
+    "products": [
+      { "product_id": "601", "image": "images/M004/401.jpeg", "price": 549 },
+      { "product_id": "602", "image": "images/M004/402.jpeg", "price": 1245 },
+      { "product_id": "603", "image": "images/M004/403.jpeg", "price": 785 },
+      { "product_id": "604", "image": "images/M004/404.jpeg", "price": 1299 },
+      { "product_id": "605", "image": "images/M004/405.jpeg", "price": 420 }
+      
+    ],
+    "title": "Let them wish!",
+    "category": "men casual",
+    "off": 15
+  }
 ]
