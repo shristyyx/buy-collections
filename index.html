@@ -29,37 +29,48 @@
       transform: translateY(0);
     }
   </style>
-</head>
-<body class="min-h-screen flex flex-col items-center justify-center px-6 py-12">
+</head><body class="min-h-screen flex flex-col items-center justify-center bg-no-repeat bg-cover bg-center relative" style="background-image: url('images/bg-img.jpg');">
 
-  <!-- Launch Hero Section -->
-  <section id="hero" class="w-full max-w-3xl text-center fade-in">
-    <h1 class="text-3xl sm:text-4xl md:text-5xl font-medium mb-4">
-      Time to turn your closet into <em class="italic font-light tracking-wide">Closette</em> ✨
-    </h1>
+  <!-- Logo at the top -->
+  <div class="absolute top-8">
+    <a href="logo.html">
+      <img src="images/logo.png" alt="Logo" class="h-8 sm:h-10 object-contain" />
+    </a>
+  </div>
 
-    <button
-      onclick="window.location.href='first.html'"
-      class="mt-6 px-6 py-3 border border-black text-black hover:bg-black hover:text-white transition-all duration-300 rounded-full text-sm sm:text-base tracking-wide"
-    >
-      LESSGOO
-    </button>
-  </section>
+  <!-- AirDrop Notification Box -->
+  <div class="bg-white/90 w-[90%] max-w-md rounded-2xl shadow-lg text-center py-6 px-4 backdrop-blur-md border border-gray-200 animate-fade-in">
+    <h2 class="text-lg font-semibold mb-1">AirDrop</h2>
+    <p class="text-sm text-gray-600 mb-4">
+      The Closette Studios is trying to turn your closet into <span class="italic font-light">Closette</span> ✨<br />
 
-  <!-- Optional JS for animation trigger -->
-  <script>
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
+    </p>
 
-    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-  </script>
+    <!-- Image or Icon (optional, like the pink shorts) -->
+    <!-- <img src="images/sample.png" class="w-32 h-32 mx-auto mb-4 object-cover rounded-lg" /> -->
+
+    <!-- Double Accept Buttons -->
+    <div class="flex justify-around mt-4">
+      <button onclick="location.href='first.html'" class="text-blue-500 font-medium text-sm ">
+        Accept
+      </button>
+      <button onclick="location.href='first.html'" class="text-blue-500 font-medium text-sm ">
+        Accept
+      </button>
+    </div>
+  </div>
+
+  <!-- Optional Fade-in Animation -->
+  <style>
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .animate-fade-in {
+      animation: fade-in 0.8s ease-out forwards;
+    }
+  </style>
 </body>
+
 </html>
