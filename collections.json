@@ -14,6 +14,21 @@
     "off": 20
   },
     {
+    "collection_id": "004",
+    "model_image": "https://ik.imagekit.io/shristyyx/F004/004.jpeg?updatedAt=1753378756156",
+    "products": [
+      { "product_id": "404","name" : "Blue Convos", "image": "https://ik.imagekit.io/shristyyx/F004/401.jpeg?updatedAt=1753077335286", "price": 1499 },
+      { "product_id": "401","name" : "Black Faded Jeans", "image": "https://ik.imagekit.io/shristyyx/F004/404.jpeg?updatedAt=1753077341619", "price": 780 },
+      { "product_id": "403","name" : "Black Sling Bag", "image": "https://ik.imagekit.io/shristyyx/F004/405.jpg?updatedAt=1753077335342", "price": 1499 },
+      { "product_id": "402","name" : "Butterfly Crop Top", "image": "https://ik.imagekit.io/shristyyx/F004/402.jpeg?updatedAt=1753077335214", "price": 899 },
+      { "product_id": "405","name" : "Black Shades","image": "https://ik.imagekit.io/shristyyx/F004/403.jpeg?updatedAt=1753077335278", "price": 489 }
+    ],
+    "title": "You own all of it!",
+    "category": "women casual",
+    "off": 10
+  },
+
+    {
     "collection_id": "003",
     "model_image": "https://ik.imagekit.io/shristyyx/F003/003.jpeg?updatedAt=1753077335795",
     "products": [
@@ -45,30 +60,16 @@
     "off": 10
   },
 
-  {
-    "collection_id": "004",
-    "model_image": "https://ik.imagekit.io/shristyyx/F004/004.jpeg?updatedAt=1753077341245",
-    "products": [
-      { "product_id": "404","name" : "Blue Convos", "image": "https://ik.imagekit.io/shristyyx/F004/401.jpeg?updatedAt=1753077335286", "price": 1499 },
-      { "product_id": "401","name" : "Black Faded Jeans", "image": "https://ik.imagekit.io/shristyyx/F004/404.jpeg?updatedAt=1753077341619", "price": 780 },
-      { "product_id": "403","name" : "Black Sling Bag", "image": "https://ik.imagekit.io/shristyyx/F004/405.jpg?updatedAt=1753077335342", "price": 1499 },
-      { "product_id": "402","name" : "Butterfly Crop Top", "image": "https://ik.imagekit.io/shristyyx/F004/402.jpeg?updatedAt=1753077335214", "price": 899 },
-      { "product_id": "405","name" : "Black Shades","image": "https://ik.imagekit.io/shristyyx/F004/403.jpeg?updatedAt=1753077335278", "price": 489 }
-    ],
-    "title": "You own all of it!",
-    "category": "women casual",
-    "off": 10
-  },
 
   
   {
     "collection_id": "005",
-    "model_image": "images/M001/001.jpeg",
+    "model_image": "https://ik.imagekit.io/shristyyx/M001/001.jpeg?updatedAt=1753377912219",
     "products": [
-      { "product_id": "501", "image": "images/M001/101.jpeg", "price": 1405 },
-      { "product_id": "502", "image": "images/M001/102.jpeg", "price": 900 },
-      { "product_id": "503", "image": "images/M001/103.jpeg", "price": 1999 },
-      { "product_id": "504", "image": "images/M001/104.jpeg", "price": 399 }
+      { "product_id": "501", "image": "https://ik.imagekit.io/shristyyx/M001/101.jpeg?updatedAt=1753377698121", "price": 1405 },
+      { "product_id": "502", "image": "https://ik.imagekit.io/shristyyx/M001/102.jpeg?updatedAt=1753377697278", "price": 900 },
+      { "product_id": "503", "image": "https://ik.imagekit.io/shristyyx/M001/103.jpeg?updatedAt=1753377698959", "price": 1999 },
+      { "product_id": "504", "image": "https://ik.imagekit.io/shristyyx/M001/104.jpeg?updatedAt=1753377697531", "price": 399 }
       
     ],
     "title": "Get the look!",
@@ -78,12 +79,12 @@
 
    {
     "collection_id": "006",
-    "model_image": "images/M002/002.jpeg",
+    "model_image": "https://ik.imagekit.io/shristyyx/M002/002.jpeg?updatedAt=1753377698578",
     "products": [
-      { "product_id": "601", "image": "images/M002/201.jpeg", "price": 2099 },
-      { "product_id": "602", "image": "images/M002/202.jpeg", "price": 599 },
-      { "product_id": "603", "image": "images/M002/203.jpeg", "price": 1299 },
-      { "product_id": "604", "image": "images/M002/304.jpeg", "price": 1499 }
+      { "product_id": "601", "image": "https://ik.imagekit.io/shristyyx/M002/201.jpeg?updatedAt=1753377698035", "price": 2099 },
+      { "product_id": "602", "image": "https://ik.imagekit.io/shristyyx/M002/202.jpeg?updatedAt=1753377697931", "price": 599 },
+      { "product_id": "603", "image": "https://ik.imagekit.io/shristyyx/M002/203.jpeg", "price": 1299 },
+      { "product_id": "604", "image": "https://ik.imagekit.io/shristyyx/M002/304.jpeg", "price": 1499 }
       
     ],
     "title": "Walk like you own the world",
@@ -92,13 +93,13 @@
   },
    {
     "collection_id": "006",
-    "model_image": "images/M003/003.jpeg",
+    "model_image": "https://ik.imagekit.io/shristyyx/M003/003.jpeg?updatedAt=1753378270103",
     "products": [
-      { "product_id": "601", "image": "images/M003/301.jpeg", "price": 2500 },
-      { "product_id": "602", "image": "images/M003/302.jpeg", "price": 1500 },
-      { "product_id": "603", "image": "images/M003/303.jpeg", "price": 1500 },
-      { "product_id": "605", "image": "images/M003/305.jpeg", "price": 2500 },
-      { "product_id": "604", "image": "images/M003/304.jpeg", "price": 1699 }
+      { "product_id": "601", "image": "https://ik.imagekit.io/shristyyx/M003/301.jpeg", "price": 2500 },
+      { "product_id": "602", "image": "https://ik.imagekit.io/shristyyx/M003/302.jpeg", "price": 1500 },
+      { "product_id": "603", "image": "https://ik.imagekit.io/shristyyx/M003/303.jpeg", "price": 1500 },
+      { "product_id": "605", "image": "https://ik.imagekit.io/shristyyx/M003/304.jpeg", "price": 2500 },
+      { "product_id": "604", "image": "https://ik.imagekit.io/shristyyx/M003/305.jpeg", "price": 1699 }
       
     ],
     "title": "They're always looking!",
@@ -107,13 +108,13 @@
   },
    {
     "collection_id": "006",
-    "model_image": "images/M004/004.jpeg",
+    "model_image": "https://ik.imagekit.io/shristyyx/M004/004.jpeg",
     "products": [
-      { "product_id": "601", "image": "images/M004/401.jpeg", "price": 549 },
-      { "product_id": "602", "image": "images/M004/402.jpeg", "price": 1245 },
-      { "product_id": "603", "image": "images/M004/403.jpeg", "price": 785 },
-      { "product_id": "604", "image": "images/M004/404.jpeg", "price": 1299 },
-      { "product_id": "605", "image": "images/M004/405.jpeg", "price": 420 }
+      { "product_id": "601", "image": "https://ik.imagekit.io/shristyyx/M004/401.jpeg", "price": 549 },
+      { "product_id": "602", "image": "https://ik.imagekit.io/shristyyx/M004/402.jpeg", "price": 1245 },
+      { "product_id": "603", "image": "https://ik.imagekit.io/shristyyx/M004/403.jpeg", "price": 785 },
+      { "product_id": "604", "image": "https://ik.imagekit.io/shristyyx/M004/404.jpeg", "price": 1299 },
+      { "product_id": "605", "image": "https://ik.imagekit.io/shristyyx/M004/405.jpeg", "price": 420 }
       
     ],
     "title": "Let them wish!",
