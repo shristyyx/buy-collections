@@ -326,7 +326,7 @@
           <button id="addToCartBtn" onclick="addToCart()" class="bg-red-600 hover:bg-red-700 text-white w-4/5 py-2 rounded transition-all duration-300">
             Add to Cart
           </button>
-          <button id="addToWishlistBtn" onclick="addToWishlist()" class="border border-pink-400 text-pink-600 hover:bg-pink-100 p-2 rounded-full text-xl">
+          <button id="addToWishlistBtn" onclick="toggleWishlist()" class="border border-pink-400 text-pink-600 hover:bg-pink-100 p-2 rounded-full text-xl">
             ❤️
           </button>
         </div>
@@ -350,6 +350,7 @@
 }
 
 
+  initializeWishlistState();
 
   function selectClothingSize(size, btn) {
     selectedClothingSize = size;
@@ -381,8 +382,7 @@ function restoreProduct(index) {
 
   function getActiveProducts() {
     return data.products.filter((_, i) => !removedIndexes.has(i));
-  }
-  function addToCart() {
+  }function addToCart() {
   const cart = JSON.parse(localStorage.getItem("cartItems")) || [];
 
   const activeProducts = getActiveProducts();
@@ -395,7 +395,7 @@ function restoreProduct(index) {
     title: data.title,
     model_image: data.model_image,
     category: data.category,
-    price: discountedPrice, // ✅ Only discounted price is stored
+    price: discountedPrice,
     clothingSize: selectedClothingSize,
     waistSize: selectedWasitSize,
     shoeSize: selectedShoeSize,
@@ -408,16 +408,37 @@ function restoreProduct(index) {
   localStorage.setItem("cartItems", JSON.stringify(cart));
 
   const btn = document.getElementById("addToCartBtn");
+  btn.disabled = true;
   btn.innerHTML = "🎉 Added to Cart!";
   btn.classList.remove("bg-red-600", "hover:bg-red-700");
   btn.classList.add("bg-green-600", "hover:bg-green-700", "bounce");
+
+  setTimeout(() => {
+    btn.innerHTML = "Add to Cart";
+    btn.classList.remove("bg-green-600", "hover:bg-green-700");
+    btn.classList.add("bg-red-600", "hover:bg-red-700");
+    btn.disabled = false;
+  }, 2500); // 2.5 seconds
+
   setTimeout(() => btn.classList.remove("bounce"), 600);
 
-    updateCartCount();
+  updateCartCount();
 }
 
-  function addToWishlist() {
-    const wishlist = JSON.parse(localStorage.getItem("wishlistItems")) || [];
+function toggleWishlist() {
+  let wishlist = JSON.parse(localStorage.getItem("wishlistItems")) || [];
+  const btn = document.getElementById("addToWishlistBtn");
+
+  const index = wishlist.findIndex(item => item.title === data.title);
+
+  if (index !== -1) {
+    // REMOVE from wishlist
+    wishlist.splice(index, 1);
+    localStorage.setItem("wishlistItems", JSON.stringify(wishlist));
+    btn.innerHTML = "❤️";
+    btn.classList.remove("bg-pink-500", "text-white");
+  } else {
+    // ADD to wishlist
     wishlist.push({
       title: data.title,
       model_image: data.model_image,
@@ -429,11 +450,26 @@ function restoreProduct(index) {
       includedProducts: getActiveProducts()
     });
     localStorage.setItem("wishlistItems", JSON.stringify(wishlist));
-    const btn = document.getElementById("addToWishlistBtn");
     btn.innerHTML = "💖";
-    btn.classList.add("bg-pink-500", "text-white", "bounce");
+    btn.classList.add("bg-white", "text-white", "bounce");
     setTimeout(() => btn.classList.remove("bounce"), 600);
   }
+}
+
+function initializeWishlistState() {
+  const wishlist = JSON.parse(localStorage.getItem("wishlistItems")) || [];
+  const exists = wishlist.some(item => item.title === data.title);
+  const btn = document.getElementById("addToWishlistBtn");
+  if (exists) {
+    btn.innerHTML = "💖";
+    btn.classList.add("bg-white", "text-white");
+  } else {
+    btn.innerHTML = "❤️";
+    btn.classList.remove("bg-pink-500", "text-white");
+  }
+}
+
+
 
   // Handle Related Products (only multiple of 3)
   fetch("collections.json").then(res => res.json()).then(collections => {
