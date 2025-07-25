@@ -215,6 +215,7 @@
   const data = JSON.parse(localStorage.getItem('selectedCollection')) || {};
   const allImages = [data.model_image, ...(data.products || []).map(p => p.image)];
   let selectedClothingSize = "M";
+  let selectedWasitSize = "30";
   let selectedShoeSize = "UK 7";
   let removedIndexes = new Set();
 
@@ -279,6 +280,16 @@
             `).join("")}
           </div>
         </div>
+
+        <div class="mb-3">
+          <div id="waistSizeOptions" class="flex gap-2 flex-wrap">
+            ${["24", "26", "28", "30", "32", "34"].map(size => `
+              <button onclick="selectWaistSize('${size}', this)"
+                      class="size-btn px-3 py-1 border rounded text-sm">${size}</button>
+            `).join("")}
+          </div>
+        </div>
+
 
         <div class="mb-3">
           <div id="shoeSizeOptions" class="flex gap-2 flex-wrap">
@@ -346,6 +357,12 @@
     btn.classList.add('selected');
   }
 
+  function selectWaistSize(size, btn) {
+    selectedWasitSize = size;
+    document.querySelectorAll('#waistSizeOptions .size-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+  }
+
   function selectShoeSize(size, btn) {
     selectedShoeSize = size;
     document.querySelectorAll('#shoeSizeOptions .size-btn').forEach(b => b.classList.remove('selected'));
@@ -380,6 +397,7 @@ function restoreProduct(index) {
     category: data.category,
     price: discountedPrice, // ✅ Only discounted price is stored
     clothingSize: selectedClothingSize,
+    waistSize: selectedWasitSize,
     shoeSize: selectedShoeSize,
     includedProducts: activeProducts.map(p => ({
       ...p,
@@ -406,6 +424,7 @@ function restoreProduct(index) {
       category: data.category,
       price: data.products.length * 999 - 1000,
       clothingSize: selectedClothingSize,
+      waistSize: selectedWasitSize,
       shoeSize: selectedShoeSize,
       includedProducts: getActiveProducts()
     });
