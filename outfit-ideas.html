@@ -6,7 +6,10 @@
   <title>The Closette Studios</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel&display=swap" rel="stylesheet">
+<!-- Serif (Elegant Bold) -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+<!-- Script (Cursive for Old-style) -->
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
 
   <style>
 
@@ -160,7 +163,6 @@
 }
 
     body {
-      background-color: #fff8f7;
       font-family: 'Inter', sans-serif;
     }
     .post-card {
@@ -233,10 +235,12 @@
     }
   </style>
 </head>
-<body>
+<body class="bg-white">
+
 
 <header class="w-full flex justify-between items-center px-4 py-3 border-b">
   <!-- Left: Site Title -->
+   
 <a href="first.html">
   <img src="images/logo.png" alt="Closette Studios Logo" class="h-10 sm:h-12 object-contain" />
 </a>
@@ -247,6 +251,8 @@
     <a href="outfit-ideas.html" class="inline-block">
       <img src="https://img.icons8.com/ios-filled/50/hanger.png" alt="Outfits" class="w-6 h-6 sm:w-8 sm:h-8 object-contain" />
     </a>
+
+
 
     <!-- Cart Icon -->
     <a href="cart.html" class="relative inline-block">
@@ -260,6 +266,15 @@
 
 
 
+
+
+<div class="text-center my-4">
+<h1 class="text-6xl text-gray-900 leading-none">
+  <span style="font-family: 'Dancing Script', cursive;" class="block text-5xl mb-[-4px]">Celebrity</span>
+  <span style="font-family: 'Playfair Display', serif;" class="block text-xl tracking-wide">Inspired</span>
+</h1>
+
+</div>
 
 
 
@@ -291,8 +306,13 @@
     </div>
   </div>
 -->
+
+
   <div id="posts-container" class="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"></div>
+
+
 </main>
+
 
 <script>
 
@@ -301,23 +321,25 @@ let allPosts = [], currentSection = "all";
 async function loadPosts() {
   const outfitPosts = JSON.parse(localStorage.getItem("outfitPosts")) || [];
   const modelLikes = JSON.parse(localStorage.getItem("modelLikes")) || {};
-  
-  // ✅ Load collections.json dynamically
-  let modelPosts = [];
+  let celebPosts = [];
+
   try {
-    const res = await fetch("collections.json");
-    const collections = await res.json();
-    modelPosts = collections.map(c => ({
-      img: c.model_image,
-      gender: c.category,
-      likes: modelLikes[c.model_image] || 0,
+    const celebRes = await fetch("celebrities.json");
+    const celebData = await celebRes.json();
+
+    celebPosts = celebData.map(c => ({
+      img: c.celeb_image,
+      collection_id: c.collection_id,
+      comingSoon: c.comingsoon,
+      gender: "women",  // Or "men" if needed later
+      likes: modelLikes[c.celeb_image] || 0,
       isProduct: true
     }));
   } catch (err) {
-    console.error("Error loading collections:", err);
+    console.error("Error loading celebrities.json:", err);
   }
 
-  allPosts = [...modelPosts, ...outfitPosts.map(o => ({ ...o, isProduct: false }))];
+  allPosts = [...celebPosts, ...outfitPosts.map(o => ({ ...o, isProduct: false }))];
   allPosts.sort((a, b) => b.likes - a.likes);
   renderPosts();
 }
@@ -325,45 +347,65 @@ async function loadPosts() {
 function renderPosts() {
   const container = document.getElementById("posts-container");
   const filtered = currentSection === "all" ? allPosts : allPosts.filter(p => p.gender === currentSection);
-  document.body.style.backgroundColor = currentSection === "men" ? "#f0f0f0" : (currentSection === "women" ? "#fff1f5" : "#fff8f7");
+  document.body.style.backgroundColor =
+    currentSection === "men" ? "#f0f0f0" :
+    currentSection === "women" ? "#fff1f5" :
+    "#fff8f7";
 
-  container.innerHTML = filtered.map((p, idx) => `
-    <div class="post-card shadow-md bg-white">
-      ${p.isProduct ? `<div class="brand-badge">Our Product</div>` : ''}
-      
-      ${p.insta && !p.isProduct ? `
-        <a href="https://instagram.com/${p.insta}" target="_blank" class="insta-badge">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2.2" class="w-7 h-7">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 2h9A5.5 5.5 0 0122 7.5v9a5.5 5.5 0 01-5.5 5.5h-9A5.5 5.5 0 012 16.5v-9A5.5 5.5 0 017.5 2zm9.75 5.25h.008v.008h-.008v-.008zM12 8.625a3.375 3.375 0 100 6.75 3.375 3.375 0 000-6.75z"/>
-          </svg>
+  container.innerHTML = filtered.map((p, idx) => {
+    const topBadge = "";
+    const hoverText = p.isProduct
+      ? (p.comingSoon ? "Coming Soon" : "View Product")
+      : (p.insta ? "View on Instagram" : "");
+
+    const clickable = p.isProduct && !p.comingSoon;
+    const isInstagram = !p.isProduct && p.insta;
+
+    let anchorAttrs = `class="block relative group cursor-${clickable || isInstagram ? 'pointer' : 'default'}"`;
+    if (clickable) {
+anchorAttrs += " href=\"#\" onclick=\"goToProductByCollectionId('" + p.collection_id + "'); return false;\"";
+    } else if (isInstagram) {
+      anchorAttrs += ` href="https://instagram.com/${p.insta}" target="_blank"`;
+    } else {
+      anchorAttrs += ` href="javascript:void(0);"`;
+    }
+
+    return `
+      <div class="post-card shadow-md bg-white">
+        ${topBadge ? `<div class="brand-badge">${topBadge}</div>` : ""}
+        <a ${anchorAttrs}>
+          <img src="${p.img}" alt="celeb outfit" class="transition duration-300 group-hover:opacity-90" />
+          ${hoverText ? `
+            <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 text-white text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
+              ${hoverText}
+            </div>` : ""}
         </a>
-      ` : ''}
-
-      <a href="${p.isProduct ? '#' : (p.insta ? `https://instagram.com/${p.insta}` : '#')}"
-         ${p.isProduct ? `onclick="goToProductByImage('${p.img}'); return false;"` : 'target="_blank"'}
-         class="block relative group">
-         
-        <img src="${p.img}" alt="outfit" class="transition duration-300 group-hover:opacity-90" />
-
-        ${p.isProduct ? `
-          <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 text-white text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
-            View Product
-          </div>
-        ` : (p.insta ? `
-          <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 text-white text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
-            View on Instagram
-          </div>
-        ` : '')}
-      </a>
-
-      <div class="px-3 py-2 text-sm text-gray-500 text-center">
-        ❤️ <span id="like-count-${idx}">${p.likes}</span> likes
-        <button onclick="likePost(${idx})" class="ml-2 text-red-500 text-xs">❤️ Like</button>
+        <div class="px-3 py-2 text-sm text-gray-500 text-center">
+          ❤️ <span id="like-count-${idx}">${p.likes}</span> likes
+          <button onclick="likePost(${idx})" class="ml-2 text-red-500 text-xs">❤️ Like</button>
+        </div>
       </div>
-    </div>
-  `).join('');
+    `;
+  }).join('');
 }
 
+function goToProductByCollectionId(collection_id) {
+  fetch("collections.json")
+    .then(res => res.json())
+    .then(data => {
+      const matched = data.find(c => c.collection_id === collection_id);
+      if (matched) {
+        localStorage.setItem("selectedCollection", JSON.stringify(matched));
+        window.location.href = "product.html";
+      } else {
+        alert("Collection not found.");
+      }
+    })
+    .catch(err => {
+      console.error("Error loading collection:", err);
+      alert("Failed to fetch collection details.");
+    });
+}
 
 function applyFilter(gender) {
   currentSection = gender;
