@@ -1,10 +1,12 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Closette Studios</title>
-
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <!-- Tailwind CSS CDN -->
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
@@ -40,10 +42,6 @@
     <div class="max-w-2xl w-full form-container p-6 sm:p-8 shadow-xl">
       <h2 class="text-2xl sm:text-3xl font-bold mb-6 text-center text-pink-600">Complete Your Order</h2>
 
-      <p class="text-sm sm:text-base text-gray-700 text-center mb-4">
-        <strong>Note:</strong> We're a new emerging business, so we’ll personally reach out via Instagram or phone to confirm your order and share payment details.
-      </p>
-
       <!-- Checkout Form -->
       <form id="checkout-form" class="space-y-4">
         <div>
@@ -76,16 +74,27 @@
         <!-- Order Summary -->
         <div class="bg-pink-50 border border-pink-200 p-4 rounded-md">
           <h3 class="font-semibold mb-2 text-pink-600">Order Summary</h3>
+          <hr>
           <ul id="order-summary" class="text-sm space-y-1"></ul>
-          <p class="font-medium mt-2">Total: ₹<span id="total-amount">0</span></p>
+          <div class="text-sm text-gray-600 mt-1">
+            <hr>
+            <p>Includes:</p>
+              <p>Delivery: ₹100</p>
+              <p>Platform Fee: ₹100</p>
+          </div>
+          <hr>
+          <p class="text-lg font-semibold">Total: ₹<span id="total-amount">0</span></p>
+
         </div>
 
-        <button type="submit" class="w-full bg-pink-600 text-white py-2 rounded-md hover:bg-pink-700 transition">Place Order</button>
+        <button id="payBtn" type="button" class="w-full bg-pink-600 text-white py-2 rounded-md hover:bg-pink-700 transition">
+          Pay Now
+        </button>
       </form>
     </div>
   </div>
 
-  <script>
+<script>
     // Initialize EmailJS
     emailjs.init("V2PB7KHpork0EN66Y");
 
@@ -95,69 +104,89 @@
     let total = 0;
 
     // Populate order summary from cart data
-   cartData.forEach(item => {
-  const itemTotal = item.price || 0;
-  total += itemTotal;
+    cartData.forEach(item => {
+      const itemTotal = item.price || 0;
+      total += itemTotal;
 
-  const li = document.createElement("li");
-  li.textContent = `${item.title} - ₹${itemTotal}`;
-  orderSummary.appendChild(li);
-});
+      const deliveryCharge = 100;
+      const platformCharge = 100;
+      total += deliveryCharge + platformCharge;
 
+      const li = document.createElement("li");
+      li.textContent = `${item.title} - ₹${itemTotal}`;
+      orderSummary.appendChild(li);
+    });
 
     totalAmountEl.textContent = total;
 
-    document.getElementById("checkout-form").addEventListener("submit", function(e) {
-  e.preventDefault();
+      document.getElementById('payBtn').onclick = function () {
+        const form = document.getElementById("checkout-form");
+        const formData = new FormData(form);
 
-  const formData = new FormData(this);
+        const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
 
-  console.log("Form Submitted");
-  console.log("Cart Data:", cartData);
+        const collectionIds = cartItems.map(item => item.collection_id).join(", ");
+        const productIds = cartItems
+          .flatMap(item => item.includedProducts.map(p => p.product_id))
+          .join(", ");
 
- const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+        let orderDetails = cartItems.map((item, idx) => {
+          return `Collection ${idx + 1} - ${item.title} (${item.category}) (ID: ${item.collection_id})
+    Clothing Size: ${item.clothingSize || "N/A"}
+    Shoe Size: ${item.shoeSize || "N/A"}
+    ${item.includedProducts.map((p, i) => `  Product ${i + 1} (ID: ${p.product_id}) - ₹${p.price}`).join("\n")}`;
+        }).join("\n\n");
 
-const collectionIds = cartItems.map(item => item.collection_id).join(", ");
-const productIds = cartItems
-  .flatMap(item => item.includedProducts.map(p => p.product_id))
-  .join(", ");
+    const data = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      phone: formData.get("phone"),
+      instagram: formData.get("instagram"),
+      address: formData.get("address"),
+      collectionIds: collectionIds,
+      productIds: productIds,
+      order: orderDetails,
+      total: total
+    };
 
-let orderDetails = cartItems.map((item, idx) => {
-  return `Collection ${idx + 1} - ${item.title} (${item.category}) (ID: ${item.collection_id})
-Clothing Size: ${item.clothingSize || "N/A"}
-Shoe Size: ${item.shoeSize || "N/A"}
-${item.includedProducts.map((p, i) => `  Product ${i + 1} (ID: ${p.product_id}) - ₹${p.price}`).join("\n")}`;
-}).join("\n\n");
+    // Razorpay setup
+    var options = {
+      "key": "rzp_test_LwadomAj2DAc7J",
+      "amount": total * 100, // in paise
+      "currency": "INR",
+      "name": "Closette Studios",
+      "description": "Outfit Collection",
+      "image": "logo.png",
+      "handler": function (response) {
+        // After successful payment
+        alert("Payment successful! Payment ID: " + response.razorpay_payment_id);
 
-const data = {
-  name: formData.get("name"),
-  email: formData.get("email"),
-  phone: formData.get("phone"),
-  instagram: formData.get("instagram"),
-  address: formData.get("address"),
-  collectionIds: collectionIds,  
-  productIds: productIds,     
-  order: orderDetails,          
-  total: total
-};
+        // Now send email
+        emailjs.send("service_ytjw67v", "template_0wdcbd6", data)
+          .then(() => {
+            localStorage.removeItem("cartItems");
+            window.location.href = "confirmation.html";
+          })
+          .catch(err => {
+            console.error("Email send failed:", err);
+            alert("Order placed but email failed to send. Contact us on Instagram.");
+            // Still redirect if needed:
+            window.location.href = "confirmation.html";
+          });
+      },
+      "prefill": {
+        "name": formData.get("name"),
+        "email": formData.get("email")
+      },
+      "theme": {
+        "color": "#fcbad3"
+      }
+    };
 
+    const rzp = new Razorpay(options);
+    rzp.open();
+  };
+</script>
 
-
-// Now you can send `data` via EmailJS, Formspree, or a backend
-console.log("Sending this order:", data);
-
-
-  emailjs.send("service_ytjw67v", "template_0wdcbd6", data)
-    .then(() => {
-      localStorage.removeItem("cartItems");
-      window.location.href = "confirmation.html";
-    })
-    .catch(err => {
-      console.error("Error:", err);
-      alert("Failed to send order. Please try again.");
-    });
-});
-
-  </script>
 </body>
 </html>

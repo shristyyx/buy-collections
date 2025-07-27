@@ -1,0 +1,28 @@
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<button id="payBtn">Pay Now</button>
+
+<script>
+document.getElementById('payBtn').onclick = function () {
+  var options = {
+    "key": "rzp_test_LwadomAj2DAc7J",
+    "amount": 50000, // in paise (i.e. ₹500.00)
+    "currency": "INR",
+    "name": "Closette Studios",
+    "description": "Outfit Collection",
+    "image": "logo.png",
+    "handler": function (response){
+      alert("Payment successful! Payment ID: " + response.razorpay_payment_id);
+      // You can redirect or store this info in your DB
+    },
+    "prefill": {
+      "name": "Shristy",
+      "email": "shristythakur2003@gmail.com"
+    },
+    "theme": {
+      "color": "#fcbad3"
+    }
+  };
+  var rzp = new Razorpay(options);
+  rzp.open();
+};
+</script>
