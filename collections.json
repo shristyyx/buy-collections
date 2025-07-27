@@ -84,9 +84,9 @@
     "model_image": "https://ik.imagekit.io/shristyyx/M002/002.jpeg?updatedAt=1753377698578",
     "products": [
       { "product_id": "601", "image": "https://ik.imagekit.io/shristyyx/M002/201.jpeg?updatedAt=1753377698035", "price": 599 },
-      { "product_id": "602", "image": "https://ik.imagekit.io/shristyyx/M002/202.jpeg?updatedAt=1753377697931", "price": 999 },
+      { "product_id": "602", "image": "https://ik.imagekit.io/shristyyx/M002/202.jpeg?updatedAt=1753377697931", "price": 1299 },
       { "product_id": "603", "image": "https://ik.imagekit.io/shristyyx/M002/203.jpeg", "price": 1099 },
-      { "product_id": "604", "image": "https://ik.imagekit.io/shristyyx/M002/304.jpeg", "price": 1099 }
+      { "product_id": "604", "image": "https://ik.imagekit.io/shristyyx/M002/304.jpeg", "price": 1999 }
       
     ],
     "title": "Silence Their Scroll 🧨",
@@ -97,10 +97,10 @@
     "collection_id": "007",
     "model_image": "https://ik.imagekit.io/shristyyx/M003/003.jpeg?updatedAt=1753378270103",
     "products": [
-      { "product_id": "701", "image": "https://ik.imagekit.io/shristyyx/M003/301.jpeg", "price": 1099 },
-      { "product_id": "702", "image": "https://ik.imagekit.io/shristyyx/M003/302.jpeg", "price": 1220 },
-      { "product_id": "705", "image": "https://ik.imagekit.io/shristyyx/M003/304.jpeg", "price": 2000 },
-      { "product_id": "704", "image": "https://ik.imagekit.io/shristyyx/M003/305.jpeg", "price": 2400 }
+      { "product_id": "701", "image": "https://ik.imagekit.io/shristyyx/M003/301.jpeg", "price": 999 },
+      { "product_id": "702", "image": "https://ik.imagekit.io/shristyyx/M003/302.jpeg", "price": 1320 },
+      { "product_id": "703", "image": "https://ik.imagekit.io/shristyyx/M003/304.jpeg", "price": 1892 },
+      { "product_id": "704", "image": "https://ik.imagekit.io/shristyyx/M003/305.jpeg", "price": 2330 }
       
     ],
     "title": "Serving Looks, Always 🍸",
@@ -113,9 +113,8 @@
     "products": [
       { "product_id": "801", "image": "https://ik.imagekit.io/shristyyx/M004/401.jpeg", "price": 1050 },
       { "product_id": "802", "image": "https://ik.imagekit.io/shristyyx/M004/402.jpeg", "price": 550 },
-      { "product_id": "804", "image": "https://ik.imagekit.io/shristyyx/M004/404.jpeg", "price": 412 },
-      { "product_id": "805", "image": "https://ik.imagekit.io/shristyyx/M004/405.jpeg", "price": 685 }
-      
+      { "product_id": "803", "image": "https://ik.imagekit.io/shristyyx/M004/404.jpeg", "price": 412 },
+      { "product_id": "804", "image": "https://ik.imagekit.io/shristyyx/M004/405.jpeg", "price": 440 }
     ],
     "title": "Just Dropped: Closet Goals 💌",
     "category": "men casual",
