@@ -12,6 +12,21 @@
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 
   <style>
+      @keyframes fade-in-down {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in-down {
+    animation: fade-in-down 0.3s ease-out;
+  }
+
     /* Background and container */
     body {
       background-image: url('https://i.pinimg.com/originals/ff/0a/6b/ff0a6b58cebb6012dbd8f69f39453f12.jpg');
@@ -71,6 +86,19 @@
           <textarea name="address" rows="3" required class="w-full border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-400"></textarea>
         </div>
 
+       <div>
+  <label class="block font-medium">Coupon Code</label>
+  <input type="text" id="couponCode" name="coupon"
+    class="w-full border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-400">
+  <button type="button" onclick="applyCoupon()"
+    class="mt-2 px-4 py-2 bg-pink-500 text-white rounded hover:bg-pink-600 transition">Apply Coupon</button>
+  <p id="couponMessage" class="text-sm mt-1 text-green-600 hidden">Coupon applied successfully!</p>
+</div>
+
+
+
+
+
         <!-- Order Summary -->
         <div class="bg-pink-50 border border-pink-200 p-4 rounded-md">
           <h3 class="font-semibold mb-2 text-pink-600">Order Summary</h3>
@@ -95,47 +123,109 @@
   </div>
 
 <script>
-    // Initialize EmailJS
-    emailjs.init("V2PB7KHpork0EN66Y");
 
-    const cartData = JSON.parse(localStorage.getItem("cartItems")) || [];
-    const orderSummary = document.getElementById("order-summary");
-    const totalAmountEl = document.getElementById("total-amount");
-    let total = 0;
 
-    // Populate order summary from cart data
-    cartData.forEach(item => {
-      const itemTotal = item.price || 0;
-      total += itemTotal;
+  let total = 0;
+  let couponApplied = false;
+  const cartData = JSON.parse(localStorage.getItem("cartItems")) || [];
 
-      const deliveryCharge = 100;
-      const platformCharge = 100;
-      total += deliveryCharge + platformCharge;
+  const orderSummary = document.getElementById("order-summary");
+  const totalAmountEl = document.getElementById("total-amount");
 
-      const li = document.createElement("li");
-      li.textContent = `${item.title} - ₹${itemTotal}`;
-      orderSummary.appendChild(li);
+  // Calculate total
+  cartData.forEach(item => {
+    const itemTotal = item.price || 0;
+    total += itemTotal;
+    total += 200; // delivery + platform charges
+
+    const li = document.createElement("li");
+    li.textContent = `${item.title} - ₹${itemTotal}`;
+    orderSummary.appendChild(li);
+  });
+
+  totalAmountEl.textContent = total;
+
+  function applyCoupon() {
+
+    const input = document.getElementById("couponCode").value.trim().toUpperCase();
+    const message = document.getElementById("couponMessage");
+
+    if (input === "TEST2") {
+      couponApplied = true;
+      totalAmountEl.textContent = 2;
+      message.textContent = "Coupon applied successfully!";
+      message.classList.remove("text-red-600");
+      message.classList.add("text-green-600");
+    } else {
+      couponApplied = false;
+      message.textContent = "Invalid coupon code";
+      message.classList.remove("text-green-600");
+      message.classList.add("text-red-600");
+    }
+
+    message.classList.remove("hidden");
+  }
+
+  document.getElementById("payBtn").onclick = function (e) {
+    e.preventDefault();
+
+    const form = document.getElementById("checkout-form");
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    const formData = new FormData(form);
+    const finalTotal = couponApplied ? 2 : total;
+
+    const rzp = new Razorpay({
+      key: "rzp_live_T7akzF7u5XQxtO",
+      amount: finalTotal * 100,
+      currency: "INR",
+      name: "Closette Studios",
+      description: "Outfit Collection",
+      image: "logo.png",
+      handler: function (response) {
+
+        sendEmailAndRedirect(finalTotal);
+      },
+      prefill: {
+        name: formData.get("name"),
+        email: formData.get("email")
+      },
+      theme: {
+        color: "#fcbad3"
+      }
     });
 
-    totalAmountEl.textContent = total;
+    rzp.open();
+  };
 
-      document.getElementById('payBtn').onclick = function () {
-        const form = document.getElementById("checkout-form");
-        const formData = new FormData(form);
+  function sendEmailAndRedirect(totalAmount) {
+    emailjs.init("V2PB7KHpork0EN66Y");
+    const form = document.getElementById("checkout-form");
+    if (!form) {
+      return;
+    }
 
-        const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+    const formData = new FormData(form);
+    const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
 
-        const collectionIds = cartItems.map(item => item.collection_id).join(", ");
-        const productIds = cartItems
-          .flatMap(item => item.includedProducts.map(p => p.product_id))
-          .join(", ");
+    if (!cartItems.length) {
+      return;
+    }
 
-        let orderDetails = cartItems.map((item, idx) => {
-          return `Collection ${idx + 1} - ${item.title} (${item.category}) (ID: ${item.collection_id})
-    Clothing Size: ${item.clothingSize || "N/A"}
-    Shoe Size: ${item.shoeSize || "N/A"}
-    ${item.includedProducts.map((p, i) => `  Product ${i + 1} (ID: ${p.product_id}) - ₹${p.price}`).join("\n")}`;
-        }).join("\n\n");
+    const collectionIds = cartItems.map(item => item.collection_id).join(", ");
+    const productIds = cartItems
+      .flatMap(item => item.includedProducts.map(p => p.product_id))
+      .join(", ");
+
+    const orderDetails = cartItems.map((item, idx) => {
+      return `Collection ${idx + 1} - ${item.title} (${item.category}) (ID: ${item.collection_id})
+  Clothing Size: ${item.clothingSize || "N/A"}
+  Shoe Size: ${item.shoeSize || "N/A"}
+  ${item.includedProducts.map((p, i) => `  Product ${i + 1} (ID: ${p.product_id}) - ₹${p.price}`).join("\n")}`;
+    }).join("\n\n");
 
     const data = {
       name: formData.get("name"),
@@ -143,50 +233,46 @@
       phone: formData.get("phone"),
       instagram: formData.get("instagram"),
       address: formData.get("address"),
-      collectionIds: collectionIds,
-      productIds: productIds,
+      collectionIds,
+      productIds,
       order: orderDetails,
-      total: total
+      total: totalAmount
     };
 
-    // Razorpay setup
-    var options = {
-      "key": "rzp_test_LwadomAj2DAc7J",
-      "amount": total * 100, // in paise
-      "currency": "INR",
-      "name": "Closette Studios",
-      "description": "Outfit Collection",
-      "image": "logo.png",
-      "handler": function (response) {
-        // After successful payment
-        alert("Payment successful! Payment ID: " + response.razorpay_payment_id);
 
-        // Now send email
-        emailjs.send("service_ytjw67v", "template_0wdcbd6", data)
-          .then(() => {
-            localStorage.removeItem("cartItems");
-            window.location.href = "confirmation.html";
-          })
-          .catch(err => {
-            console.error("Email send failed:", err);
-            alert("Order placed but email failed to send. Contact us on Instagram.");
-            // Still redirect if needed:
-            window.location.href = "confirmation.html";
-          });
-      },
-      "prefill": {
-        "name": formData.get("name"),
-        "email": formData.get("email")
-      },
-      "theme": {
-        "color": "#fcbad3"
-      }
-    };
+    emailjs.send("service_ytjw67v", "template_0wdcbd6", data)
+      .then(() => {
+        localStorage.removeItem("cartItems");
+        window.location.href = "confirmation.html";
+      })
+      .catch(err => {
+        showToast("There was an error sending your order, if the payment is complete don't worry, just reach out to us on Instagram or WhatsApp and we will help you out!", "msg");
+      });
+  }
 
-    const rzp = new Razorpay(options);
-    rzp.open();
-  };
+  function showToast(message, type = "error") {
+    const toast = document.createElement("div");
+    toast.className = `
+      relative max-w-md w-full mx-auto mb-4 px-4 py-3 rounded-lg shadow-lg text-white flex justify-between items-start gap-4
+      ${type === "error" ? "bg-red-500 bg-opacity-90" : "bg-green-500 bg-opacity-90"} 
+      animate-fade-in-down`;
+
+    toast.innerHTML = `
+      <span class="flex-1">${message}</span>
+      <button class="ml-4 text-xl leading-none focus:outline-none" onclick="this.parentElement.remove()">×</button>
+    `;
+
+    const container = document.getElementById("toast-container");
+    container.appendChild(toast);
+
+    setTimeout(() => {
+      toast.classList.add("opacity-0");
+      setTimeout(() => toast.remove(), 300);
+    }, 5000);
+  }
 </script>
+
+<div id="toast-container" class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-xl flex flex-col items-center space-y-2"></div>
 
 </body>
 </html>
