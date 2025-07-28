@@ -309,7 +309,7 @@
                 <p class="text-sm font-medium">Product ${i + 1}</p>
                 <p class="text-xs text-gray-600">Price: ₹${data.products[i].price}</p>
               </div>
-              <button onclick="removeProduct(${i})" class="text-xs text-red-500 hover:underline">❌ Remove</button>
+              <button onclick="removeProduct(${i})" class="hidden text-xs text-red-500 hover:underline ">❌ Remove</button>
             </div>
           `).join("")}
         </div>
@@ -566,7 +566,7 @@ function updateTotalPrice() {
           </p>
         </div>
         <button onclick="${isRemoved ? `restoreProduct(${i})` : `removeProduct(${i})`}" 
-                class="text-xs ${isRemoved ? 'restore-btn' : 'remove-btn'} hover:underline">
+                class="hidden text-xs ${isRemoved ? 'restore-btn' : 'remove-btn'} hover:underline">
           ${isRemoved ? '➕ Restore' : '❌ Remove'}
         </button>
       </div>`;

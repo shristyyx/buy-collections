@@ -3,10 +3,10 @@
     "collection_id": "001",
     "model_image": "https://ik.imagekit.io/shristyyx/F001/001.jpeg?updatedAt=1753077329334",
     "products": [
-      { "product_id": "101", "name" : "Black Mini Dress", "image": "https://ik.imagekit.io/shristyyx/F001/101.jpg?updatedAt=1753077328986", "price": 800 },
-      { "product_id": "104", "name" : "Red Sling Bag", "image": "https://ik.imagekit.io/shristyyx/F001/102.jpg?updatedAt=1753077328871", "price": 480 },
+      { "product_id": "101", "name" : "Black Mini Dress", "image": "https://ik.imagekit.io/shristyyx/F001/101.jpg?updatedAt=1753077328986", "price": 900 },
+      { "product_id": "104", "name" : "Red Sling Bag", "image": "https://ik.imagekit.io/shristyyx/F001/102.jpg?updatedAt=1753077328871", "price": 680 },
       { "product_id": "102", "name" : "Black Lace Boot", "image": "https://ik.imagekit.io/shristyyx/F001/103.jpg?updatedAt=1753077328378", "price": 800 },
-      { "product_id": "105", "name" : "Silver Hoops", "image": "https://ik.imagekit.io/shristyyx/F001/105.jpg?updatedAt=1753077329043", "price": 430 }
+      { "product_id": "105", "name" : "Silver Hoops", "image": "https://ik.imagekit.io/shristyyx/F001/105.jpg?updatedAt=1753077329043", "price": 230 }
       
     ],
     "title": "She’s the Main Character 💋",
@@ -18,9 +18,9 @@
     "model_image": "https://ik.imagekit.io/shristyyx/F003/003.jpeg?updatedAt=1753077335795",
     "products": [
       { "product_id": "201", "name" : "Black Skirt", "image": "https://ik.imagekit.io/shristyyx/F003/302.jpeg?updatedAt=1753077335086", "price": 600 },
-      { "product_id": "202", "name" : "White Tank Top", "image": "https://ik.imagekit.io/shristyyx/F003/304.jpeg?updatedAt=1753077335801", "price": 500 },
-      { "product_id": "205", "name" : "Black Bag", "image": "https://ik.imagekit.io/shristyyx/F003/303.jpeg?updatedAt=1753077335058", "price": 700 },
-      { "product_id": "204", "name" : "Strappy Heels", "image": "https://ik.imagekit.io/shristyyx/F003/301.jpeg?updatedAt=1753077335792", "price": 900 },
+      { "product_id": "202", "name" : "White Tank Top", "image": "https://ik.imagekit.io/shristyyx/F003/304.jpeg?updatedAt=1753077335801", "price": 540 },
+      { "product_id": "205", "name" : "Black Bag", "image": "https://ik.imagekit.io/shristyyx/F003/303.jpeg?updatedAt=1753077335058", "price": 900 },
+      { "product_id": "204", "name" : "Strappy Heels", "image": "https://ik.imagekit.io/shristyyx/F003/301.jpeg?updatedAt=1753077335792", "price": 920 },
       { "product_id": "203", "name" : "Satin Shirt" ,"image": "https://ik.imagekit.io/shristyyx/F003/305.jpeg?updatedAt=1753077335139", "price": 690 }
 
 
