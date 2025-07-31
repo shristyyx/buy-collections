@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gym Bros – The Closette Studios</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+  <style>
+    .slideshow img {
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
+  z-index: -1;
+}
+.opacity-100 {
+  opacity: 1 !important;
+}
+
+    body {
+      font-family: 'Anton', sans-serif;
+      background: linear-gradient(to right, #1f1f1f, #2c2c2c);
+      color: white;
+    }
+    .hero {
+      background: url('https://images.unsplash.com/photo-1571019613935-48cbc0f384e2') no-repeat center;
+      background-size: cover;
+    }
+  </style>
+</head>
+<body class="text-white">
+<!-- Hamburger Menu Container -->
+<!-- Hamburger Menu on Top-Left -->
+<div class="absolute top-4 left-4 z-50">
+  <button id="menu-toggle" class="p-2 bg-black bg-opacity-60 rounded-md hover:bg-opacity-80 transition">
+    <!-- Hamburger Icon -->
+    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2"
+      viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path stroke-linecap="round" stroke-linejoin="round"
+        d="M4 6h16M4 12h16M4 18h16"></path>
+    </svg>
+  </button>
+
+  <!-- Dropdown Menu -->
+  <div id="menu-dropdown"
+    class="hidden mt-2 bg-black bg-opacity-80 text-white text-sm rounded-lg shadow-lg py-2 w-40 flex flex-col">
+    <a href="index.html" class="px-4 py-2 hover:bg-white hover:text-black transition"> Home</a>
+    <a href="cart.html" class="px-4 py-2 hover:bg-white hover:text-black transition"> Cart</a>
+    <a href="celeb-outfits.html" class="px-4 py-2 hover:bg-white hover:text-black transition"> Celeb Outfits</a>
+  </div>
+</div>
+
+
+
+ <!-- Hero Slideshow Section -->
+<section class="relative h-screen overflow-hidden">
+  <!-- Background Slideshow -->
+  <div class="absolute inset-0 z-0 slideshow">
+    <img src="https://i.pinimg.com/736x/94/02/12/9402129a39aa927f45e0bdbc5756d860.jpg" class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-[2000ms]" />
+    <img src="https://i.pinimg.com/736x/cc/8e/fb/cc8efb82b27df6eff12e6b5c0db5df49.jpg" class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-[2000ms]" />
+    <img src=" https://i.pinimg.com/1200x/cf/10/74/cf1074ad1a89d9f5e4eec8e5e1e72ea3.jpg" class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-[2000ms]" />
+</div>
+
+  <!-- Bottom-overlaid box -->
+  <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-10 bg-black/60 backdrop-blur-md px-6 py-4 rounded-xl shadow-lg text-center w-[85%] max-w-md">
+    <h1 class="text-3xl font-bold uppercase tracking-widest text-white">GYM BROS</h1>
+    <p class="mt-2 text-sm text-gray-300">Built for the grind. Styled for the flex.</p>
+    <a href="#collections" class="mt-4 inline-block bg-red-600 hover:bg-red-700 text-white py-2 px-6 rounded-full text-sm transition-all duration-300">
+      Explore the Drop
+    </a>
+  </div>
+</section>
+
+  <!-- Collections -->
+  <section id="collections" class="py-12 px-4 sm:px-10">
+    <h2 class="text-2xl sm:text-4xl text-center font-bold mb-10">New Drop: The Gym Bros Collection 💥</h2>
+    <div id="gymbros-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="text-center py-6 border-t border-gray-700 mt-10 text-sm text-gray-400">
+    &copy; 2025 Closette Studios – Gym Bros Edition
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const response = await fetch('collections.json');
+      const data = await response.json();
+      const container = document.getElementById('gymbros-container');
+
+      const gymCollections = data.filter(item => {
+        return item.category?.toLowerCase().includes('gymbros');
+      });
+
+      gymCollections.forEach((item, i) => {
+        const totalOriginal = item.products.reduce((sum, p) => sum + p.price, 0);
+        const discount = item.off || 0;
+        const discountedPrice = Math.round(totalOriginal * (1 - discount / 100));
+
+        const card = document.createElement('div');
+        card.className = "bg-white text-black rounded-xl overflow-hidden shadow-lg transform transition-all duration-300 hover:scale-105";
+
+        card.innerHTML = `
+          <div class="w-full h-64 overflow-hidden">
+            <img src="${item.model_image}" alt="${item.title}" class="w-full h-full object-cover object-top"/>
+          </div>
+          <div class="p-4 text-center">
+            <h3 class="text-lg font-semibold">${item.title}</h3>
+            <div class="flex justify-center items-center gap-2 mt-2">
+              <span class="text-gray-400 line-through text-sm">₹${totalOriginal}</span>
+              <span class="font-bold text-red-600 text-base">₹${discountedPrice}</span>
+              <span class="text-green-500 text-xs">(${discount}% OFF)</span>
+            </div>
+            <button class="shop-btn mt-4 bg-black text-white px-4 py-2 rounded w-full" data-index="${i}">
+              Shop Collection
+            </button>
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+
+      document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('shop-btn')) {
+          const index = parseInt(e.target.getAttribute('data-index'));
+          const selected = gymCollections[index];
+          if (!selected) return;
+          localStorage.setItem('selectedCollection', JSON.stringify(selected));
+          window.location.href = 'product.html';
+        }
+      });
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+    const slides = document.querySelectorAll('.slideshow img');
+    let current = 0;
+
+    function showNextSlide() {
+      slides[current].classList.remove('opacity-100');
+      slides[current].classList.add('opacity-0');
+
+      current = (current + 1) % slides.length;
+
+      slides[current].classList.remove('opacity-0');
+      slides[current].classList.add('opacity-100');
+    }
+
+    // Initial display
+    slides[0].classList.add('opacity-100');
+
+    // Change every 5 seconds
+    setInterval(showNextSlide, 5000);
+  });
+
+  const menuToggle = document.getElementById("menu-toggle");
+  const menuDropdown = document.getElementById("menu-dropdown");
+
+  menuToggle.addEventListener("click", () => {
+    menuDropdown.classList.toggle("hidden");
+  });
+
+  // Optional: Close menu when clicking outside
+  document.addEventListener("click", function (e) {
+    if (!menuToggle.contains(e.target) && !menuDropdown.contains(e.target)) {
+      menuDropdown.classList.add("hidden");
+    }
+  });
+  </script>
+</body>
+</html>
