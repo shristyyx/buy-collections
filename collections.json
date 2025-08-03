@@ -16,12 +16,12 @@
   
   {
     "collection_id": "011",
-    "model_image": "images/F007/F007.png",
+    "model_image": "https://ik.imagekit.io/shristyyx/F007/F007.png?updatedAt=1754234620232",
     "products": [
-      { "product_id": "1101","image": "images/F007/F701.jpg", "price": 849 },
-      { "product_id": "1102", "image": "images/F007/F702.png", "price": 799 },
-      { "product_id": "1103", "image": "images/F007/F703.png", "price": 899 },
-      { "product_id": "1104", "image": "images/F007/F704.png", "price": 1278 }
+      { "product_id": "1101","image": "https://ik.imagekit.io/shristyyx/F007/F701.jpg", "price": 849 },
+      { "product_id": "1102", "image": "https://ik.imagekit.io/shristyyx/F007/F702.png?updatedAt=1754234638403", "price": 799 },
+      { "product_id": "1103", "image": "https://ik.imagekit.io/shristyyx/F007/F703.png?updatedAt=1754234622751", "price": 899 },
+      { "product_id": "1104", "image": "https://ik.imagekit.io/shristyyx/F007/F704.png?updatedAt=1754235314871", "price": 1278 }
     ],
     "title": "Runway Reps 🏃‍♀️ ️",
     "category": "gymbros women casual",
@@ -46,12 +46,12 @@
   },
     {
     "collection_id": "010",
-    "model_image": "images/F006/F006.jpeg",
+    "model_image": "https://ik.imagekit.io/shristyyx/F006/F006.jpeg",
     "products": [
-      { "product_id": "1001","image": "images/F006/F601.PNG", "price": 649 },
-      { "product_id": "1002", "image": "images/F006/F602.png", "price": 1259 },
-      { "product_id": "1003", "image": "images/F006/F603.png", "price": 1407 },
-      { "product_id": "1004", "image": "images/F006/F604.png", "price": 899 }
+      { "product_id": "1001","image": "https://ik.imagekit.io/shristyyx/F006/F601.png", "price": 649 },
+      { "product_id": "1002", "image": "https://ik.imagekit.io/shristyyx/F006/F602.png", "price": 1259 },
+      { "product_id": "1003", "image": "https://ik.imagekit.io/shristyyx/F006/F603.png", "price": 1407 },
+      { "product_id": "1004", "image": "https://ik.imagekit.io/shristyyx/F006/F604.png", "price": 899 }
     ],
     "title": "Sculpted Souls 🧘‍♀️ ️",
     "category": "gymbros women casual",
@@ -149,12 +149,12 @@
   },
    {
     "collection_id": "009",
-    "model_image": "images/F005/F005.jpeg",
+    "model_image": "https://ik.imagekit.io/shristyyx/F005/F005.jpeg?updatedAt=1754234588342",
     "products": [
-      { "product_id": "901","image": "images/F005/F501.jpg", "price": 1500 },
-      { "product_id": "902", "image": "images/F005/F502.png", "price": 1250 },
-      { "product_id": "903", "image": "images/F005/F503.png", "price": 1399 },
-      { "product_id": "904", "image": "images/F005/F504.png", "price": 900 }
+      { "product_id": "901","image": "https://ik.imagekit.io/shristyyx/F005/F501.jpg", "price": 1500 },
+      { "product_id": "902", "image": "https://ik.imagekit.io/shristyyx/F005/F502.png", "price": 1250 },
+      { "product_id": "903", "image": "https://ik.imagekit.io/shristyyx/F005/F503.png", "price": 1399 },
+      { "product_id": "904", "image": "https://ik.imagekit.io/shristyyx/F005/F504.png", "price": 900 }
     ],
     "title": "Sweat in Style 🏋️‍♀ ️",
     "category": "gymbros women casual",
@@ -163,12 +163,12 @@
 
   {
     "collection_id": "012",
-    "model_image": "images/F008/F008.jpeg",
+    "model_image": "https://ik.imagekit.io/shristyyx/F008/F008.jpeg",
     "products": [
-      { "product_id": "1201","image": "images/F008/F801.PNG", "price": 995 },
-      { "product_id": "1202", "image": "images/F008/F802.png", "price": 583 },
-      { "product_id": "1203", "image": "images/F008/F803.png", "price": 1285 },
-      { "product_id": "1204", "image": "images/F008/F804.png", "price": 673 }
+      { "product_id": "1201","image": "https://ik.imagekit.io/shristyyx/F008/F801.png", "price": 995 },
+      { "product_id": "1202", "image":"https://ik.imagekit.io/shristyyx/F008/F802.png", "price": 583 },
+      { "product_id": "1203", "image": "https://ik.imagekit.io/shristyyx/F008/F803.png", "price": 1285 },
+      { "product_id": "1204", "image": "https://ik.imagekit.io/shristyyx/F008/F804.png", "price": 673 }
     ],
     "title": "Move & Muse 🌸 ️",
     "category": "gymbros women casual",
