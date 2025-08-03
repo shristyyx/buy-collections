@@ -7,8 +7,13 @@
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
 
   <style>
+      .heading-font {
+    font-family: 'Playfair Display', serif;
+  }
     html {
       scroll-behavior: smooth;
     }
@@ -52,11 +57,6 @@
 
     <!-- Right: Icons -->
     <div class="flex items-center gap-4">
-  <!-- Outfit Ideas -->
-  <a href="outfit-ideas.html" title="Outfit Ideas">
-    <img src="https://img.icons8.com/ios-filled/100/hanger.png" alt="Outfit Ideas"
-      class="w-6 h-6 sm:w-8 sm:h-8 hover:scale-110 transition-transform duration-300" />
-  </a>
 
   <!-- Cart Icon -->
   <button id="cart-button" onclick="location.href='cart.html'" class="relative">
@@ -72,9 +72,39 @@
   </header>
 </section>
 
+
+<section class="mt-8 px-3 md:px-4 pt-6 pb-6 ">
+  <h2 class="text-4xl sm:text-6xl text-center font-extrabold tracking-tight heading-font mb-6">
+    New Drops 🧨
+  </h2>
+
+  <div class="grid grid-cols-2 gap-1">
+    <!-- Celebrity Fits (Bottom Left) -->
+    <a href="celebfits.html" class="relative group overflow-hidden rounded-xl shadow-lg">
+      <img src="https://i.pinimg.com/1200x/a6/36/34/a636341f849394d1bf650c589fa52b03.jpg" alt="Celebrity Fits"
+        class="w-full h-full object-cover transform group-hover:scale-105 transition duration-300 ease-in-out" />
+      <div class="absolute bottom-0 left-0 p-5">
+        <span class="heading-font text-white text-2xl sm:text-3xl font-extrabold text-left leading-tight">
+          Celebrity<br />Fits
+        </span>
+      </div>
+    </a>
+
+    <!-- Gymbro Fits (Top Right) -->
+    <a href="gymbros.html" class="relative group overflow-hidden rounded-xl shadow-lg">
+      <img src="https://i.pinimg.com/1200x/96/30/60/963060498f36c659bd5bccc9399c5c49.jpg" alt="Gym Bro Fits"
+        class="w-full h-full object-cover transform group-hover:scale-105 transition duration-300 ease-in-out" />
+      <div class="absolute top-0 right-0 p-5 text-right">
+        <span class="heading-font text-white text-2xl sm:text-3xl font-extrabold leading-tight">
+          Gymbro<br />Fits
+        </span>
+      </div>
+    </a>
+  </div>
+</section>
+
 <!-- Page Title + Filter Buttons -->
 <section class="p-4 sm:p-6 text-center pb-8">
-  <h2 class="text-lg sm:text-3xl font-bold mb-3 sm:mb-4">Shop Curated Collections</h2>
  <!-- Gender Switch Button -->
 <!-- Gender Switch Buttons -->
 <div class="absolute top-[60%] w-full z-20 pointer-events-none">

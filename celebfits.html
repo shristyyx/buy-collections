@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://cdn.tailwindcss.com"></script>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>The Closette Studios</title>
@@ -237,33 +239,38 @@
 </head>
 <body class="bg-black">
 
+<!-- Header over Slideshow -->
+<div class="absolute top-4 w-full px-4 z-50 flex justify-between items-center">
 
-<header class="w-full flex justify-between items-center px-4 py-3 border-b">
-  <!-- Left: Site Title -->
-   
-<a href="index.html">
-  <img src="images/logo.png" alt="Closette Studios Logo" class="h-10 sm:h-12 object-contain" />
-</a>
+  <!-- Left Corner Menu -->
+  <div class="absolute top-4 left-4 z-50">
+    <!-- Hamburger Menu -->
+    <div class="relative">
+      <button id="menu-toggle" class="p-2 hover:bg-black hover:bg-opacity-10 transition">
+        <!-- Hamburger Icon -->
+        <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" stroke-width="2"
+          viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
 
-  <!-- Right: Icons -->
-  <div class="flex items-center space-x-4">
-    <!-- Outfit Ideas Icon -->
-    <a href="outfit-ideas.html" class="inline-block">
-      <img src="https://img.icons8.com/ios-filled/50/hanger.png" alt="Outfits" class="w-6 h-6 sm:w-8 sm:h-8 object-contain" />
-    </a>
+      <!-- Dropdown Menu -->
+     <div id="menu-dropdown"
+  class="hidden absolute left-0 mt-2 bg-white bg-opacity-90 text-black text-lg font-sans shadow-lg w-48 flex flex-col border border-gray-300 divide-y divide-gray-200">
 
+        <a href="index.html" class="px-4 py-3 hover:bg-black hover:text-white transition">Home</a>
+        <a href="cart.html" class="px-4 py-3 hover:bg-black hover:text-white transition">My Cart</a>
 
+        <div class="px-4 py-2 text-xs uppercase tracking-widest text-gray-500">Collections</div>
 
-    <!-- Cart Icon -->
-    <a href="cart.html" class="relative inline-block">
-      <img src="https://img.icons8.com/ios-filled/100/shopping-cart.png" alt="Cart" class="w-6 h-6 sm:w-8 sm:h-8 object-contain" />
-      <span id="cart-count" class="absolute -top-1 -right-1 bg-pink-600 text-white text-[10px] font-semibold rounded-full w-4 h-4 flex items-center justify-center shadow-md">0</span>
-    </a>
+        <a href="celebfits.html" class="px-4 py-3 hover:bg-black hover:text-white transition">Celebrity Outfits</a>
+        <a href="gymbros.html" class="px-4 py-3 hover:bg-black hover:text-white transition">Gymbros Fits</a>
+      </div>
+    </div>
   </div>
-</header>
 
-
-
+</div>
 
 
 <!--
@@ -277,16 +284,19 @@
 
 -->
 <!-- Search-bar-style title -->
-<div class="flex justify-center mt-3 px-3">
-  <div class="w-full max-w-xl bg-white shadow-md rounded-xl px-3 py-2 flex items-center space-x-3 border border-gray-200">
-    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m0 0A7 7 0 103 10a7 7 0 0013.65 6.65z" />
-    </svg>
-    <span class="text-gray-500 text-sm tracking-wide font-medium" style="font-family: 'Playfair Display', serif;">
-      Celebrity Inspired Outfits
-    </span>
+<div class="pt-20"> <!-- pushes content below fixed header -->
+  <div class="flex justify-center mt-3 px-3">
+    <div class="w-full max-w-xl bg-white shadow-md rounded-xl px-3 py-2 flex items-center space-x-3 border border-gray-200">
+      <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m0 0A7 7 0 103 10a7 7 0 0013.65 6.65z" />
+      </svg>
+      <span class="text-gray-500 text-sm tracking-wide font-medium" style="font-family: 'Playfair Display', serif;">
+        New Drop: The Celebrity Fits Collection ✨
+      </span>
+    </div>
   </div>
 </div>
+
 
 <!-- Scrollable Celebrity Profiles -->
 <div class="mt-2 px-3">
@@ -525,15 +535,30 @@ async function goToProductByImage(img) {
 
 loadPosts();
 
-function updateCartCount() {
-    const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-    document.getElementById('cart-count').textContent = cartItems.length;
-  }
 
-  // Call it once on page load
-  updateCartCount();
+
+  document.addEventListener("DOMContentLoaded", function () {
+  const menuToggle = document.getElementById("menu-toggle");
+  const menuDropdown = document.getElementById("menu-dropdown");
+
+  if (menuToggle && menuDropdown) {
+    menuToggle.addEventListener("click", (e) => {
+      e.stopPropagation(); // Prevent document click handler
+      
+      menuDropdown.classList.toggle("hidden");
+    });
+
+    document.addEventListener("click", function (e) {
+      if (!menuToggle.contains(e.target) && !menuDropdown.contains(e.target)) {
+        menuDropdown.classList.add("hidden");
+      }
+    });
+  } else {
+    console.warn("Menu elements not found in DOM.");
+  }
+});
+
 </script>
-<div class="h-10"></div>
 
 </body>
 </html>
